@@ -1,0 +1,37 @@
+snippet rt
+	render text: ${1}
+snippet lt
+	<%= link_to "${1}", ${2} %>${3}
+snippet bf
+	before_filter :${1}
+snippet hm
+	has_many :${1}s
+snippet bt
+	belongs_to :${1}
+snippet habtm
+	has_and_belongs_to_many :${1}
+snippet aa
+	attr_accessible :${1}
+snippet flash
+	flash[:${1:notice}] = "${2}"
+snippet crud
+	def index${1}
+	end
+
+	def show
+	end
+
+	def new
+	end
+
+	def create
+	end
+
+	def edit
+	end
+
+	def update
+	end
+
+	def destroy
+	end

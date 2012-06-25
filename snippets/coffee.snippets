@@ -1,0 +1,123 @@
+# port from Textmate Coffeescript bundle (https://github.com/jashkenas/coffee-script-tmbundle)
+# and add some snippets I used while developing Backbone app.
+# by Eddie Kao (eddie@digik.com.tw)
+
+# Class
+snippet cla Class...
+	class ${1:ClassName}
+	  constructor: (${2:args}) ->
+	    ${3: #body...}
+snippet cla Class...Extends
+	class ${1:ClassName} extends ${2:Ancestor}
+	  constructor: (${3:args}) ->
+	    ${4: # body...}
+snippet init
+	constructor: (${1:args}) ->
+	  ${2: # body...}
+# Function
+snippet fun
+	${1:name} = (${2:args}) ->
+	  ${3: # body...}
+snippet func
+	${1:name} = (${2:args}) ->
+	  ${3: # body...}
+# Flow control
+snippet if
+	if ${1:condition}
+	  ${0:# body...}
+snippet ife
+	if ${1:condition}
+	  ${2:# body...}
+	else
+	  ${3:# body...}
+snippet elif
+	else if ${1:condition}
+	  ${2:# body...}
+snippet unless
+	${1:action} unless ${2:condition}
+snippet switch
+	switch ${1:object}
+	  when ${2:value}
+	    ${3:# body...}
+# Bound
+snippet bfun
+	(${1:args}) => ${0:# body...}
+# Utils
+snippet log
+	console.log "${1}"
+snippet jq
+	$ ->
+	  ${1:# body}
+# Array
+snippet for
+	for ${1:name} in ${2:array}
+	  ${3: # body...}
+# Try
+snippet try
+	try
+	  ${1:#try something}
+	catch ${2:error}
+	  ${3:#catching something..}
+	finally
+	  ${4:#finally..}
+# ---------
+# Backbone
+# ---------
+snippet root
+	root = exports ? this
+snippet winapp
+	@app = window.app ? {}
+# Backbone - Collection
+snippet BB create a Backbone Collection class
+	class ${1:CollectionClassName} extends Backbone.Collection
+
+	  model: ${2:ModelName}
+
+	  url: '${3:URL}'
+	  ${4}
+
+# Backbone - Model
+snippet BB create a Backbone Model class
+	class ${1:ModelName} extends Backbone.Model
+	  urlRoot: '${2}url'
+	  ${3}
+
+# Backbone - View
+snippet BB create a Backbone View class
+	class ${1:ViewClassName} extends Backbone.View
+
+	  # element settings
+	  tagName: "${2}"
+	  className: "${3}"
+	  id: "${4}"
+
+	  # initializer, you might register model or
+	  # collection's event listener here.
+	  # example: @model.on 'change', @render, @
+	  initialize: ->
+	    ${5}
+
+	  # view events
+	  events:
+	    "click": "open"
+
+	  # template method
+	  template: _.template($('#${6}').html())
+
+	  # render method, usually return self conventionally for chaining
+	  render: ->
+	    $(@el).html(@template())
+	    @
+
+# Backbone - Route
+snippet BB create a Backbone Router class
+	class ${1:RouterClassName} extends Backbone.Router
+	  # urls mapping
+	  routes:
+	    # map the root path to index action
+	    "": "index"
+
+	  index: ->
+	    alert "hello"
+	  ${2}
+
