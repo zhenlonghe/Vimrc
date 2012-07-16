@@ -82,6 +82,7 @@
 [submodule "bundle/calendar.vim"]
 	path = bundle/calendar.vim
 	url = git://github.com/vim-scripts/calendar.vim
+        ignore = untracked
 [submodule "bundle/align"]
 	path = bundle/align
 	url = git://github.com/vim-scripts/Align.git
@@ -119,9 +120,6 @@
 	path = bundle/snipmate.vim
   url = git://github.com/msanders/snipmate.vim.git
         ignore = untracked
-[submodule "bundle/calendar.vim"]
-	path = bundle/calendar.vim
-  url = git://github.com/vim-scripts/calendar.vim.git
 [submodule "bundle/colorselector.vim"]
 	path = bundle/colorselector.vim
   url = git://github.com/vim-scripts/colorselector.vim.git
