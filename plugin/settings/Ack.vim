@@ -1,3 +1,4 @@
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 if executable("ack")
   noremap FF :Ack<SPACE>
 else

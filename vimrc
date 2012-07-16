@@ -6,6 +6,7 @@ let g:mapleader=","
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+
 " let Vundle manage Vundle
 " required!
 Bundle 'gmarik/vundle'
@@ -23,3 +24,10 @@ Bundle 'ervandew/supertab'
 Bundle 'msanders/snipmate.vim'
 Bundle 'taglist.vim'
 Bundle 'vimwiki'
+"Bundle 'jiangmiao/auto-pairs'
+Bundle 'Townk/vim-autoclose'
+Bundle 'c9s/colorselector.vim'
+Bundle 'michaeljsmith/vim-indent-object'
+Bundle 'tpope/vim-ragtag'
+Bundle 'ap/vim-css-color'
+Bundle 'mileszs/ack.vim'

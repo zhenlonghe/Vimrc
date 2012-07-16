@@ -58,6 +58,7 @@ set shiftwidth=2
 set tabstop=2
 set shortmess=I                       " remove splash wording
 
+set mouse=a
 " disable sound on errors
 set visualbell
 set noerrorbells
@@ -115,3 +116,5 @@ cnoremap %% <C-R>=expand('%:h').'/'<CR>
 " quick open vimrc in a new tab
 nmap <leader>v :tabe $MYVIMRC<CR>
 map <leader>0 :topleft 100 :split README.md<CR>
+"map <leader>w :w<CR>
+nmap <leader>ee :tabe $HOME/.vim/plugin/settings/Settings.vim<CR>
