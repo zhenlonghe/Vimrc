@@ -120,7 +120,7 @@
 	path = bundle/snipmate.vim
   url = git://github.com/msanders/snipmate.vim.git
         ignore = untracked
-[submodule "bundle/colorselector.vim"]
+[submodule "bundle/colorselector"]
 	path = bundle/colorselector
   url = git://github.com/vim-scripts/colorselector.git
 [submodule "bundle/vim-autoclose"]
