@@ -118,3 +118,5 @@ nmap <leader>v :tabe $MYVIMRC<CR>
 map <leader>0 :topleft 100 :split README.md<CR>
 "map <leader>w :w<CR>
 nmap <leader>ee :tabe $HOME/.vim/plugin/settings/Settings.vim<CR>
+vmap <leader>xx "+y
+nmap <leader>vv "+p
