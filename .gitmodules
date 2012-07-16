@@ -119,7 +119,13 @@
 	path = bundle/snipmate.vim
   url = git://github.com/msanders/snipmate.vim.git
         ignore = untracked
+[submodule "bundle/calendar.vim"]
+	path = bundle/calendar.vim
+  url = git://github.com/vim-scripts/calendar.vim.git
+[submodule "bundle/colorselector.vim"]
+	path = bundle/colorselector.vim
+  url = git://github.com/vim-scripts/colorselector.vim.git
 [submodule "bundle/vim-autoclose"]
 	path = bundle/vim-autoclose
-  url = git://github.com/
+  url = git://github.com/Townk/autoclose.vim.git
         ignore = untracked

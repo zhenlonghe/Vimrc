@@ -13,7 +13,7 @@ Bundle 'gmarik/vundle'
 
 " vim-scripts repos
 
-Bundle 'calendar.vim--Matsumoto'
+Bundle 'calendar.vim'
 Bundle 'matchit.zip'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'scrooloose/nerdtree'
@@ -26,7 +26,7 @@ Bundle 'taglist.vim'
 Bundle 'vimwiki'
 "Bundle 'jiangmiao/auto-pairs'
 Bundle 'Townk/vim-autoclose'
-Bundle 'c9s/colorselector.vim'
+Bundle 'colorselector.vim'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'tpope/vim-ragtag'
 Bundle 'ap/vim-css-color'
