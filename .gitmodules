@@ -130,3 +130,4 @@
 [submodule "bundle/vundle"]
 	path = bundle/vundle
   url = git://github.com/gmarik/vundle.git
+        ignore = untracked
