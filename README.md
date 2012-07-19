@@ -70,7 +70,6 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
 
     h. `<tab>` and `<shift><tab>` to increase and decrease the syntax identation.
 
-
     i. `<leader>v` to open `.vimrc` in a new tab.
 
     j. `<leader>0` to edit or create `README.md` in current working directory.
