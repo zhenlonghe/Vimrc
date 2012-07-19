@@ -12,8 +12,6 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " vim-scripts repos
-
-Bundle 'calendar.vim'
 Bundle 'matchit.zip'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'scrooloose/nerdtree'
