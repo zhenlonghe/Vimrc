@@ -21,24 +21,12 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
 
 4. cd to `eddie-vim` directory and execute the `update.sh` to get latest version modules:
 
-        cd eddie-vim
-        ./update.sh
+        :BundleInstall!
 
-5. make a symbolic link `.vim` to `eddie-vim` that you just cloned, or just rename it to `.vim` also be fine:
 
-        ln -s eddie-vim .vim
-
-6. link the vimrc to
+5. link the vimrc to
 
         ln -s .vim/vimrc .vimrc
-
-7. if you're still not familiar with the movement in vim by HJKL or yanking and pasting text, I've made a easier version:
-
-        ln -s .vim/vimrc .vimrc
-
-8. if you use GUI version VIM, such as MacVim or GVim, you can also link to `.gvimrc`:
-
-        ln -s eddie-vim/gvimrc .gvimrc
 
 
 ### Update:
@@ -73,6 +61,10 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
     i. `<leader>v` to open `.vimrc` in a new tab.
 
     j. `<leader>0` to edit or create `README.md` in current working directory.
+
+    k. `<leader>s` for ack search
+    l. `<leader>f` for nohlsearch
+    m.
 
 4. Remove tailing whitespace automatically while saving.
 

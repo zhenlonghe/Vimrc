@@ -14,7 +14,7 @@ function! PresentationModeOn()
 endfunction
 
 function! PresentationModeOff()
-  colorscheme rails_envy
+  colorscheme molokai
 
   if has("gui_macvim")
     set guifont=Monaco:h17           " for Mac

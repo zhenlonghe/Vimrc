@@ -41,7 +41,7 @@ set incsearch                         " incremental search
 syntax enable
 set t_Co=256
 try
-  colorscheme rails_envy
+  colorscheme molokai
 catch
 endtry
 
@@ -95,7 +95,9 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 
 " comment
-map <Leader><Leader> <Leader>c<space>
+"map <Leader><Leader> <Leader>cc
+
+map <Leader>f :nohlsearch<CR>
 
 " next and prev tab
 noremap <F7> gT
