@@ -1,5 +1,6 @@
 "other settings see plugin/settings/Settings
 
+
 " set leader to ,
 let mapleader=","
 let g:mapleader=","
