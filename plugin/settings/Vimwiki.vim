@@ -1,5 +1,6 @@
 let g:vimwiki_camel_case = 0
-let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki'}]
+let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki',
+      \"syntax": "markdown"}]
 
 map <leader>a :VimwikiToggleListItem<CR>
 
