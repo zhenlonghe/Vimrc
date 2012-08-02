@@ -6,4 +6,4 @@ map <leader>a :VimwikiToggleListItem<CR>
 
 
 " diary map
-:map <F2> <ESC>ggO· <C-R>=strftime("%Y %m %d %A")<CR><ESC>5o<ESC>ggJj^i<tab>
+:map <F2> <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>5o<ESC>ggJj^i<tab>

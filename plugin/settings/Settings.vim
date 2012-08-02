@@ -127,4 +127,4 @@ nmap <leader>vv "+p
 map <leader>da "=strftime("%Y/%m/%d")<CR>P"
 map <leader>ti "=strftime("%H:%M:%S")<CR>P"
 " diary map
-:map <F2> <ESC>ggO· <C-R>=strftime("%Y %m %d %A")<CR><ESC>3o<ESC>ggJj^i<tab>-
+:map <F2> <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>3o<ESC>ggJj^i<tab>-
