@@ -53,3 +53,11 @@ if executable("perl")
 else
   autocmd BufRead,BufNewFile *.pl map <F5> :echo "you need to install Perl first!"<CR>
 end
+
+" C Script
+autocmd BufRead,BufNewFile *.c map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+exec "w"
+exec "!gcc % -o %<"
+exec "! ./%<"
+endfunc
