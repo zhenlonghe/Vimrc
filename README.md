@@ -19,10 +19,7 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
 
         git clone vundle
 
-4. cd to `eddie-vim` directory and execute the `update.sh` to get latest version modules:
-
-        :BundleInstall!
-
+4. cd to `zhenlong-vimrc` directory and execute the `:BundleInstall!  ` to get latest version modules:
 
 5. link the vimrc to
 
@@ -38,7 +35,7 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
 
 1. Resize splited windows automatically, so that you  get a bigger editing room if you're working with a smaller screen. (stole from [Gary Bernhardt](https://github.com/garybernhardt))
 
-2. Toggle between working mode and presentation mode by `<leader>z`, but only work in GUI version Vim. You can check [here](http://blog.eddie.com.tw/2012/03/14/switch-to-presentation-mode/) to see how it looks like. (stole from [Mike Skalnik](https://github.com/skalnik))
+2. Toggle between working mode and presentation mode by `<leader>z`, but only work in GUI version Vim.
 
 3. some usually used key mappings in normal mode:
 
