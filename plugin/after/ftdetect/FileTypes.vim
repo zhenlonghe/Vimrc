@@ -22,3 +22,6 @@ autocmd! BufNewFile,BufRead *.zsh-theme set filetype=zsh
 
 " Nginx Config
 autocmd! BufNewFile,BufRead nginx.conf set filetype=nginx
+
+" Java
+au BufNewFile,BufRead *.java,*.jav,*.aidl  set filetype=java
