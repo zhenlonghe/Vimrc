@@ -31,6 +31,10 @@ set synmaxcol=128
 set viminfo=			                    " disable .viminfo file
 set ttyfast                           " send more chars while redrawing
 
+set noimdisable
+set iminsert=0
+set imsearch=0
+
 filetype on                           " enable filetype detection
 filetype indent on                    " enable filetype-specific indenting
 filetype plugin on                    " enable filetype-specific plugins
