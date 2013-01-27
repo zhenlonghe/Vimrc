@@ -39,4 +39,9 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'tpope/vim-repeat'
 Bundle 'benmills/vimux'
+<<<<<<< HEAD
 Bundle 'xolox/vim-easytags'
+=======
+Bundle 'godlygeek/tabular'
+Bundle 'Lokaltog/vim-easymotion'
+>>>>>>> 5e44f34872124a76cfc4ea71cddbe63a06fac829
