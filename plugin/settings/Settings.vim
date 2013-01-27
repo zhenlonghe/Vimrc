@@ -31,9 +31,13 @@ set synmaxcol=128
 set viminfo=			                    " disable .viminfo file
 set ttyfast                           " send more chars while redrawing
 
-set noimdisable
-set iminsert=0
-set imsearch=0
+"se imd
+"au InsertEnter * se noimd
+"au InsertLeave * se imd
+"au FocusGained * se imd
+"set noimdisable
+"set iminsert=0
+"set imsearch=0
 
 filetype on                           " enable filetype detection
 filetype indent on                    " enable filetype-specific indenting
@@ -94,7 +98,7 @@ autocmd WinLeave * setlocal nocursorline
 "  custom key and plugin configurations
 " ======================================
 " remove tailing whitespace
-autocmd BufWritePre * :%s/\s\+$//e
+" autocmd BufWritePre * :%s/\s\+$//e
 
 
 

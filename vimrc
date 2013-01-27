@@ -4,6 +4,8 @@
 " set leader to ,
 let mapleader=","
 let g:mapleader=","
+set nocompatible
+filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -25,6 +27,7 @@ Bundle 'taglist.vim'
 Bundle 'vimwiki'
 Bundle 'colorselector'
 "Bundle 'jiangmiao/auto-pairs'
+Bundle 'mattn/calendar-vim'
 Bundle 'Townk/vim-autoclose'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'tpope/vim-ragtag'
@@ -36,3 +39,4 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'tpope/vim-repeat'
 Bundle 'benmills/vimux'
+Bundle 'xolox/vim-easytags'
