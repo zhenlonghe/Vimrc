@@ -162,3 +162,7 @@
 	path = bundle/vim-easytags
 	url = git://github.com/xolox/vim-easytags.git
         ignore = dirty
+[submodule "bundle/Solarized"]
+	path = bundle/Solarized
+	url = git://github.com/altercation/vim-colors-solarized.git
+        ignore = untracked

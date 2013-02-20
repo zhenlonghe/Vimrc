@@ -51,8 +51,13 @@ set t_Co=256
 try
   if (!isMac)
     let g:solarized_termcolors=256
-    let g:solarized_termtrans
-    colorscheme solarized_dark
+    let g:solarized_termtrans=1
+    let g:solarized_degrade=1
+    let g:solarized_contrast = "normal"
+    set backspacing=dark
+    let g:solarized_italic=1
+    let g:solarized_underline =1
+    colorscheme solarized
   else
     colorscheme molokai
   endif
