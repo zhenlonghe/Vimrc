@@ -127,3 +127,11 @@
 	path = bundle/vundle
   url = git://github.com/gmarik/vundle.git
         ignore = untracked
+[submodule "calendar-vim"]
+	path = calendar-vim
+	url = git://github.com/mattn/calendar-vim.git
+        ignore = dirty
+[submodule "vim-easytags"]
+	path = vim-easytags
+	url = git://github.com/xolox/vim-easytags.git
+        ignore = dirty

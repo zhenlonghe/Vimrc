@@ -9,7 +9,7 @@ set linebreak
 set nolist
 set hidden
 set linespace=0
-set cursorline
+set nocursorline
 set nofoldenable
 set number
 set numberwidth=4
@@ -23,7 +23,7 @@ set splitright                        " always open vertical split window in the
 set splitbelow                        " always open horizontal split window below
 set scrolloff=5                       " start scrolling when n lines away from margins
 set switchbuf=useopen
-"set showtabline=2                     " always show tab
+set showtabline=2                     " always show tab
 set wildmode=longest,list             " use emacs-style tab completion when selecting files, etc
 set wildmenu                          " make tab completion for files/buffers act like bash
 set key=			                        " disable encryption
@@ -49,7 +49,9 @@ set incsearch                         " incremental search
 syntax enable
 set t_Co=256
 try
-  colorscheme molokai
+  let g:solarized_termcolors=256
+  let g:solarized_termtrans
+  colorscheme solarized_dark
 catch
 endtry
 
@@ -60,11 +62,11 @@ set copyindent                        " copy the previous indentation on autoind
 set ignorecase                        " ignore case when searching
 set smartcase
 set smarttab                          " insert tabs on the start of a line according to
-set expandtab                         " replace <TAB> with spaces
+set expandtab                         " replace <tab> with spaces
 set softtabstop=4
 set shiftwidth=2
 set tabstop=2
-set shortmess=I                       " remove splash wording
+set shortmess=i                       " remove splash wording
 
 set mouse=a
 " disable sound on errors
@@ -86,55 +88,60 @@ set wildignore+=*.swf,*.fla                    " image format
 set wildignore+=*.mp3,*.mp4,*.avi,*.mkv        " media format
 set wildignore+=*.git*,*.hg*,*.svn*            " version control system
 set wildignore+=*sass-cache*
-set wildignore+=*.DS_Store
+set wildignore+=*.ds_store
 set wildignore+=log/**
 set wildignore+=tmp/**
 
 " cursorline switched while focus is switched to another split window
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
+"autocmd winenter * setlocal cursorline
+autocmd winleave * setlocal nocursorline
+
+
 
 " ======================================
 "  custom key and plugin configurations
 " ======================================
 " remove tailing whitespace
-<<<<<<< HEAD
-" autocmd BufWritePre * :%s/\s\+$//e
-=======
-"autocmd BufWritePre * :%s/\s\+$//e
->>>>>>> 5e44f34872124a76cfc4ea71cddbe63a06fac829
+" autocmd bufwritepre * :%s/\s\+$//e
+"autocmd bufwritepre * :%s/\s\+$//e
 
 
 
-" comment
-"map <Leader><Leader> <Leader>cc
+"map <leader><leader> <leader>cc                " comment
+map <leader>f :nohlsearch<cr>
 
-map <Leader>f :nohlsearch<CR>
+" 用c-j,k在buffer之间切换
+nn <c-j> :bn<cr>
+nn <c-k> :bp<cr>
+ 
+"bash(emacs)风格键盘绑定
+imap <c-e> <end>
+imap <c-a> <home>
 
-" next and prev tab
-noremap <F7> gT
-noremap <F8> gt
+"next and prev tab
+noremap <f7> gt
+noremap <f8> gt
 
 " identation
-nmap <TAB> v>
-nmap <S-TAB> v<
-vmap <TAB> >gv
-vmap <S-TAB> <gv
+nmap <tab> v>
+nmap <s-tab> v<
+vmap <tab> >gv
+vmap <s-tab> <gv
 
-" remap VIM 0
+" remap vim 0
 map 0 ^
 
 " return current opened file's dirctory
-cnoremap %% <C-R>=expand('%:h').'/'<CR>
+cnoremap %% <c-r>=expand('%:h').'/'<cr>
 
 " quick open vimrc in a new tab
-nmap <leader>v :tabe $MYVIMRC<CR>
-map <leader>0 :topleft 100 :split $HOME/.vim/README.md<CR>
-map <leader>w :w<CR>
-nmap <leader>ee :tabe $HOME/.vim/plugin/settings/Settings.vim<CR>
+nmap <leader>v :tabe $MYVIMRC<cr>
+map <leader>0 :topleft 100 :split $HOME/.vim/readme.md<cr>
+map <leader>w :w<cr>
+nmap <leader>ee :tabe $HOME/.vim/plugin/settings/Settings.vim<cr>
 vmap <leader>xx "+y
 nmap <leader>vv "+p
 
 "time & date map
-map <leader>da "=strftime("%Y/%m/%d")<CR>P"
-map <leader>ti "=strftime("%H:%M:%S")<CR>P"
+map <leader>da "=strftime("%y/%m/%d")<cr>p"
+map <leader>ti "=strftime("%h:%m:%s")<cr>p"
