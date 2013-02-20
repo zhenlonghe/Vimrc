@@ -23,7 +23,7 @@ set splitright                        " always open vertical split window in the
 set splitbelow                        " always open horizontal split window below
 set scrolloff=5                       " start scrolling when n lines away from margins
 set switchbuf=useopen
-set showtabline=2                     " always show tab
+"set showtabline=2                     " always show tab
 set wildmode=longest,list             " use emacs-style tab completion when selecting files, etc
 set wildmenu                          " make tab completion for files/buffers act like bash
 set key=			                        " disable encryption
@@ -49,9 +49,13 @@ set incsearch                         " incremental search
 syntax enable
 set t_Co=256
 try
-  let g:solarized_termcolors=256
-  let g:solarized_termtrans
-  colorscheme solarized_dark
+  if (!isMac)
+    let g:solarized_termcolors=256
+    let g:solarized_termtrans
+    colorscheme solarized_dark
+  else
+    colorscheme molokai
+  endif
 catch
 endtry
 
