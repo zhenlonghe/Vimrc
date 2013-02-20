@@ -128,10 +128,10 @@
   url = git://github.com/gmarik/vundle.git
         ignore = untracked
 [submodule "calendar-vim"]
-	path = calendar-vim
+	path = bundle/calendar-vim
 	url = git://github.com/mattn/calendar-vim.git
-        ignore = dirty
+        ignore = dirty 
 [submodule "vim-easytags"]
-	path = vim-easytags
+	path = bundle/vim-easytags
 	url = git://github.com/xolox/vim-easytags.git
         ignore = dirty
