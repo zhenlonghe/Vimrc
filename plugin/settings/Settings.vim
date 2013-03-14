@@ -53,14 +53,7 @@ try
   if (isMac)
     colorscheme molokai
   else
-    "let g:solarized_termcolors=256
-    "let g:solarized_termtrans=1
-    "let g:solarized_degrade=1
-    "let g:solarized_contrast = "normal"
-    "set backspacing=dark
-    "let g:solarized_italic=1
-    "let g:solarized_underline =1
-    colorscheme solarized
+    colorscheme molokai
     "if has('syntax')
       "let g:molokai_original = 1
       "colorscheme github
