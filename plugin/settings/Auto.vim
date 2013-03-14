@@ -7,23 +7,28 @@
 "---------------------------------------------------------------------------
 se nocp exrc
 se nu is cin smd wmnu magic
-im  ,, <ESC>:w<CR>
+im  <c-s> <ESC>:w<CR>
 im  ;; <ESC>
 map<Up>   gk
 map<Down> gj
-no!<M-k> <Up>
-no!<M-j> <Down>
-no!<M-h> <Left>
-no!<M-l> <Right>
+"no!<M-k> <Up>
+"no!<M-j> <Down>
+"no!<M-h> <Left>
+"no!<M-l> <Right>
+
+no!<c-k> <Up>
+no!<c-j> <Down>
+no!<c-h> <Left>
+no!<c-l> <Right>
 nm<silent> ;; :q!<CR>
-nm<silent> ,, :w<CR>
+nm<silent> <c-s> :w<CR>
 au BufRead,BufNewFile *.html setf html
 au FileType python,ruby,sh :call Py()
 au FileType cpp,c,cc,h,html,perl :call Cc()
 au FileType c,cc,cpp,h,html,python :call Cp()
 fu Cp()
-        ino , ,<SPACE>
-	ino ; ;<SPACE>
+  ino , ,<SPACE>
+  ino ; ;<SPACE>
 	ino <= <SPACE><=<SPACE>
 	ino *= <SPACE>*=<SPACE>
 	ino /= <SPACE>/=<SPACE>
@@ -104,6 +109,7 @@ fu Ct()
 		exe "!firefox %"
 	en
 endf
+
 au FileType h,c,cc,cpp,sh,perl,python :call YWcode()
 fu YWcode()
 	se ai si

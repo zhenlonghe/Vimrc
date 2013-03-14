@@ -5,6 +5,7 @@
 
 function! PresentationModeOn()
   colorscheme github
+  set background=light
 
   if has("gui_macvim")
     set guifont=Monaco:h25           " for Mac
@@ -14,6 +15,7 @@ function! PresentationModeOn()
 endfunction
 
 function! PresentationModeOff()
+  set background=dark
   colorscheme molokai
 
   if has("gui_macvim")

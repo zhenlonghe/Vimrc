@@ -1,5 +1,5 @@
-let g:ackprg="ack -H --nocolor --nogroup --column"
-if executable("ack")
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+if executable("ack-grep")
   noremap FF :Ack<SPACE>
   nmap <leader>s :Ack <C-R>=expand("<cword>")<CR><CR>
 else

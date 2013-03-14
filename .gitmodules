@@ -146,9 +146,9 @@
 	path = bundle/colorselector
   url = git://github.com/vim-scripts/colorselector.git
         ignore = untracked
-[submodule "bundle/vim-autoclose"]
-	path = bundle/vim-autoclose
-  url = git://github.com/Townk/autoclose.vim.git
+[submodule "bundle/auto-pairs"]
+	path = bundle/auto-pairs
+  url = git://github.com/jiangmiao/auto-pairs.git
         ignore = untracked
 [submodule "bundle/vundle"]
 	path = bundle/vundle
@@ -162,7 +162,27 @@
 	path = bundle/vim-easytags
 	url = git://github.com/xolox/vim-easytags.git
         ignore = dirty
-[submodule "bundle/Solarized"]
-	path = bundle/Solarized
-	url = git://github.com/altercation/vim-colors-solarized.git
-        ignore = untracked
+[submodule "majutsushi/tagbar"]
+	path = bundle/tagbar
+	url = git://github.com/majutsushi/tagbar.git
+        ignore = dirty 
+[submodule "bundle/Logcat-syntax-highlighter"]
+	path = bundle/Logcat-syntax-highlighter
+	url = https://github.com/vim-scripts/Logcat-syntax-highlighter.git
+        ignore = dirty 
+[submodule "bundle/prop.vim"]
+	path = bundle/prop.vim
+	url = https://github.com/vim-scripts/prop.vim.git
+        ignore = dirty 
+[submodule "bundle/EasyMotion"]
+	path = bundle/EasyMotion
+	url = https://github.com/vim-scripts/EasyMotion.git
+        ignore = dirty 
+[submodule "bundle/javacomplete"]
+	path = bundle/javacomplete
+	url = https://github.com/vim-scripts/javacomplete.git
+        ignore = dirty 
+[submodule "bundle/neocomplcache"]
+	path = bundle/neocomplcache
+	url = https://github.com/Shougo/neocomplcache.git
+        ignore = dirty 

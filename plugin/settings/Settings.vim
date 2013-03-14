@@ -1,3 +1,14 @@
+"---------------------------------------------------------------------------
+"    Description:  zhenlong's vimrc
+"    Author:       zhenlonghe@gmail.com
+"    License:      GPL v2.0
+"    Version:      2.1
+"---------------------------------------------------------------------------
+
+" ======================================
+"   general settings
+" ======================================
+
 set nocompatible                      " not compatible with the old-fashion vi mode
 set backspace=2                       " allow backspacing over everything in insert nc >kkmode
 set history=1000                      " keep 1000 lines of command line history
@@ -23,7 +34,6 @@ set splitright                        " always open vertical split window in the
 set splitbelow                        " always open horizontal split window below
 set scrolloff=5                       " start scrolling when n lines away from margins
 set switchbuf=useopen
-"set showtabline=2                     " always show tab
 set wildmode=longest,list             " use emacs-style tab completion when selecting files, etc
 set wildmenu                          " make tab completion for files/buffers act like bash
 set key=			                        " disable encryption
@@ -31,15 +41,6 @@ set synmaxcol=128
 set viminfo=			                    " disable .viminfo file
 set ttyfast                           " send more chars while redrawing
 
-"se imd
-"au InsertEnter * se noimd
-"au InsertLeave * se imd
-"au FocusGained * se imd
-"set noimdisable
-"set iminsert=0
-"set imsearch=0
-
-filetype on                           " enable filetype detection
 filetype indent on                    " enable filetype-specific indenting
 filetype plugin on                    " enable filetype-specific plugins
 
@@ -49,17 +50,24 @@ set incsearch                         " incremental search
 syntax enable
 set t_Co=256
 try
-  if (!isMac)
-    let g:solarized_termcolors=256
-    let g:solarized_termtrans=1
-    let g:solarized_degrade=1
-    let g:solarized_contrast = "normal"
-    set backspacing=dark
-    let g:solarized_italic=1
-    let g:solarized_underline =1
-    colorscheme solarized
-  else
+  if (isMac)
     colorscheme molokai
+  else
+    "let g:solarized_termcolors=256
+    "let g:solarized_termtrans=1
+    "let g:solarized_degrade=1
+    "let g:solarized_contrast = "normal"
+    "set backspacing=dark
+    "let g:solarized_italic=1
+    "let g:solarized_underline =1
+    colorscheme solarized
+    "if has('syntax')
+      "let g:molokai_original = 1
+      "colorscheme github
+      "au BufNewFile,BufRead,BufEnter,WinEnter * colo zenburn
+      "au BufNewFile,BufRead,BufEnter,WinEnter *.wiki colo jellybeans
+      "syntax on
+    "endif
   endif
 catch
 endtry
@@ -78,6 +86,7 @@ set tabstop=2
 set shortmess=i                       " remove splash wording
 
 set mouse=a
+
 " disable sound on errors
 set visualbell
 set noerrorbells
@@ -105,37 +114,31 @@ set wildignore+=tmp/**
 "autocmd winenter * setlocal cursorline
 autocmd winleave * setlocal nocursorline
 
+" remove tailing whitespace
+"autocmd bufwritepre * :%s/\s\+$//e
+"autocmd bufwritepre * :%s/\s\+$//e
 
 
 " ======================================
 "  custom key and plugin configurations
 " ======================================
-" remove tailing whitespace
-" autocmd bufwritepre * :%s/\s\+$//e
-"autocmd bufwritepre * :%s/\s\+$//e
 
+" jj replace ESC in insertmode
+im jj <ESC>
 
-
-"map <leader><leader> <leader>cc                " comment
-map <leader>f :nohlsearch<cr>
-
-" 用c-j,k在buffer之间切换
+" c-j,k for buffer switch
 nn <c-j> :bn<cr>
 nn <c-k> :bp<cr>
- 
-"bash(emacs)风格键盘绑定
+
+" emacs key bind
 imap <c-e> <end>
 imap <c-a> <home>
-
-"next and prev tab
-noremap <f7> gt
-noremap <f8> gt
-
-" identation
-nmap <tab> v>
-nmap <s-tab> v<
-vmap <tab> >gv
-vmap <s-tab> <gv
+imap <C-f> <Right>
+imap <C-b> <Left>
+imap <M-f> <S-Right>
+imap <M-b> <S-Left>
+imap <M-n> <Down>
+imap <M-p> <Up>
 
 " remap vim 0
 map 0 ^
@@ -143,14 +146,24 @@ map 0 ^
 " return current opened file's dirctory
 cnoremap %% <c-r>=expand('%:h').'/'<cr>
 
-" quick open vimrc in a new tab
-nmap <leader>v :tabe $MYVIMRC<cr>
-map <leader>0 :topleft 100 :split $HOME/.vim/readme.md<cr>
-map <leader>w :w<cr>
-nmap <leader>ee :tabe $HOME/.vim/plugin/settings/Settings.vim<cr>
-vmap <leader>xx "+y
-nmap <leader>vv "+p
+" time & date map
+nmap <leader>da "=strftime("%y/%m/%d")<cr>p"
+nmap <leader>ti "=strftime("%h:%m:%s")<cr>p"
 
-"time & date map
-map <leader>da "=strftime("%y/%m/%d")<cr>p"
-map <leader>ti "=strftime("%h:%m:%s")<cr>p"
+" quick open vimrc in a new tab
+nmap <leader>v  :tabe $MYVIMRC<cr>
+map  <leader>0  :topleft 100 :split $HOME/.vim/README.md<cr>
+
+nmap <leader>ee :tabe $HOME/.vim/plugin/settings/Settings.vim<cr>
+
+" mouse
+nmap <leader>sv :set mouse=v<cr>
+nmap <leader>sa :set mouse=a<cr>
+
+map  <leader>ta :Tabularize /
+nmap <leader>f  :nohlsearch<cr>
+nmap <leader>w  :w !sudo tee %<cr>
+
+"insert a space line
+nmap <leader>n o<ESC>
+set ofu=syntaxcomplete#Complete

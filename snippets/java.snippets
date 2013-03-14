@@ -1,3 +1,23 @@
 snippet alog
 	Log.v("xxx","${1}"${2});
 	${3}
+
+snippet jwtadd
+	 /* Add ${1:commit} by hezhenlong `strftime("%Y%m%d")` JWT start */
+	 ${2}
+	 /* Add $1 by hezhenlong `strftime("%Y%m%d")` JWT end*/
+
+snippet jwtdel
+	 /* Delete ${1:commit} by hezhenlong `strftime("%Y%m%d")` JWT start */
+	 ${2}
+	 /* Delete $1 by hezhenlong `strftime("%Y%m%d")` JWT end*/
+
+snippet jwtmod
+	 /* Modify ${1:commit} by hezhenlong `strftime("%Y%m%d")` JWT start */
+	 ${2}
+	 /* Modify $1 by hezhenlong `strftime("%Y%m%d")` JWT end*/
+
+snippet forx
+	for (${2:i}; $2 < ${1:count}; $1++) {
+		${4}
+	}

@@ -1,6 +1,7 @@
-if (g:isMac)
-  let Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8/bin/ctags'
+if (isMac)
+  let easytags_cmd='/usr/local/Cellar/ctags/5.8/bin/ctags'
 endif
+
 let Tlist_WinWidth=40
 let Tlist_GainFocus_On_ToggleOpen=1
 map <F4> :TlistToggle<cr>

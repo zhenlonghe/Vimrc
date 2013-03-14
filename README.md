@@ -28,50 +28,54 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
 
 ### Update:
 
-1. :BundleInstall  --init
-2. :BundleInstall! --update
+1. init
+        `:BundleInstall`
 
-### Features and Key Mappings:
+2. update
+        `:BundleInstall!`
 
-1. Resize splited windows automatically, so that you  get a bigger editing room if you're working with a smaller screen. (stole from [Gary Bernhardt](https://github.com/garybernhardt))
+### Key Mappings:
 
-2. Toggle between working mode and presentation mode by `<leader>z`, but only work in GUI version Vim.
+    - `<F1>`                        to toggle a Calendar window on and off.
 
-3. some usually used key mappings in normal mode:
+    - `<F2>`                        to toggle NERDTree on and off.
 
-    a. `<F1>` to toggle a Calendar window on and off.
+    - `<F4>`                        to toggle Taglist window.
 
-    b. `<F2>` to toggle NERDTree on and off.
+    - `<F5>`                        is the script runner, according to it's filetype, it will run Ruby(*.rb) ,Python(*.py) or Javascript(*.js) file(SpiderMonkey is needed), even CoffeeScript(*.coffee, but you may have to install CoffeeScript first). If the filetype is VimScript, `<F5>` will run `:source %` for you.
 
-    c. `<F4>` to toggle Taglist window.
+    - `<ctrl>p`                     will launch a quick window to match keywords from your current working directory, not only file name, but also path name. And `<ctrl>w u` will match from your MRU(Mostly Recent Used) files, which is also frequently used.
 
-    d. `<F5>` is the script runner, according to it's filetype, it will run Ruby(*.rb) ,Python(*.py) or Javascript(*.js) file(SpiderMonkey is needed), even CoffeeScript(*.coffee, but you may have to install CoffeeScript first). If the filetype is VimScript, `<F5>` will run `:source %` for you.
+    - `<leader>v`                   to open `.vimrc` in a new tab.
 
-    e. `<F7>` to switch to previous tab, and `<F8>` to the next tab.
+    - `<leader>0`                   to edit or create `README.md` in current working directory.
 
-    f. hit `<ctrl>p` will launch a quick window to match keywords from your current working directory, not only file name, but also path name. And `<ctrl>w u` will match from your MRU(Mostly Recent Used) files, which is also frequently used.
+    - `<leader>0`                   open README.md file for the vim conf.
 
-    g. hit `<leader>` twice to toggle comment on and off.
+    - `<leader>s`                   for ack search
 
-    h. `<tab>` and `<shift><tab>` to increase and decrease the syntax identation.
+    - `<leader>f`                   for nohlsearch
 
-    i. `<leader>v` to open `.vimrc` in a new tab.
+    - `<leader>da`                  insert the data today.
 
-    j. `<leader>0` to edit or create `README.md` in current working directory.
+    - `<leader>ti`                  insert the current time.
 
-    k. `<leader>s` for ack search
-    l. `<leader>f` for nohlsearch
-    m.
+    - `<leader>ee`                  edit setting.vim.
 
-4. Remove tailing whitespace automatically while saving.
+    - `<leader>n`                   add a space line.
 
-## FAQ
+    - `<leader>sa`                  set mouse=a.
 
-if you can not found `ctags` command, just find your ctags path and replace my settings in `plugin/settings/Ctags.vim` file:
+    - `<leader>sv`                  set mouse=a
 
-    let Tlist_Ctags_Cmd = '/your/path/to/ctags'
+    - `<leader>ta`                  tabularize
 
-and [Exuberant Ctags](http://ctags.sourceforge.net/) is recommended.
+    - `<leader>v`                   open vimrc file.
+
+    - `<leader>z`                   Toggle between working mode and presentation mode by , but font only work in GUI version Vim.
+
+    - `FF`                          Ack Search.
+    - `jj`                         map jj for ESC
 
 ## Contact
 
