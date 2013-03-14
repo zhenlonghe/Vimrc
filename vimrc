@@ -61,6 +61,9 @@ if has('mac')
 else
   let g:isMac = 0
 endif
+if (isMac)
+  let easytags_cmd='/usr/local/Cellar/ctags/5.8/bin/ctags'
+endif
 "Added by android-vim:
 set tags+=/home/jero/.vim/tags
 autocmd Filetype java setlocal omnifunc=javacomplete#Complete
