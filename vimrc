@@ -34,7 +34,6 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'Raimondi/delimitMate'
 Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'tpope/vim-repeat'
-Bundle 'xolox/vim-easytags'
 Bundle 'godlygeek/tabular'
 Bundle 'majutsushi/tagbar'
 Bundle 'Logcat-syntax-highlighter'
@@ -60,10 +59,3 @@ if has('mac')
 else
   let g:isMac = 0
 endif
-if (isMac)
-  let easytags_cmd='/usr/local/Cellar/ctags/5.8/bin/ctags'
-endif
-"Added by android-vim:
-set tags+=/home/jero/.vim/tags
-autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-let g:SuperTabDefaultCompletionType = 'context'
