@@ -66,7 +66,7 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
 
     - `<leader>sa`                  set mouse=a.
 
-    - `<leader>sv`                  set mouse=a
+    - `<leader>sv`                  set mouse=v
 
     - `<leader>ta`                  tabularize
 
