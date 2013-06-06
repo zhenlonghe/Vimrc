@@ -41,6 +41,7 @@ Bundle 'prop.vim'
 Bundle 'javacomplete'
 Bundle 'EasyMotion'
 Bundle 'Shougo/neocomplcache'
+Bundle 'showliu/vbookmark.vim'
 
 if has("gui_running")
   let g:isgui = 1
