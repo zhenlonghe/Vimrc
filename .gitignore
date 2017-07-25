@@ -1,1 +1,4 @@
 .netrwhist
+.DS_Store
+plugged/
+autoload/
