@@ -11,18 +11,26 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'enricobacis/vim-airline-clock'
+" Colorsheme {
+Plug 'c9s/colorselector.vim'
 Plug 'altercation/vim-colors-solarized'
+Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
 Plug 'nanotech/jellybeans.vim'
 Plug 'tomasr/molokai'
+"}
+Plug 'terryma/vim-multiple-cursors'
+Plug 'sjl/gundo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/matchit.zip'
 Plug 'pelodelfuego/vim-swoop'
+Plug 'vim-scripts/SearchComplete'
+Plug 'vim-scripts/SQLComplete.vim'
+Plug 'gaving/vim-sqlcase'
 Plug 'itchyny/calendar.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'c9s/colorselector.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -31,6 +39,9 @@ Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+"Plug 'mhinz/vim-signify'
+"Plug 'chrisbra/changesplugin'
 Plug 'ervandew/supertab'
 Plug 'sirver/ultisnips'
 Plug 'vim-scripts/taglist.vim'
@@ -40,7 +51,6 @@ Plug 'kana/vim-repeat'
 call plug#end()
 
 " Environment {
-
     " Identify platform {
         silent function! OSX()
             return has('macunix')
@@ -74,32 +84,18 @@ call plug#end()
             inoremap <silent> <C-[>OC <RIGHT>
         endif
     " }
-
 " }
 
 " General {
-
     set background=dark         " Assume a dark background
-
-    " Allow to trigger background
-    function! ToggleBG()
-        let s:tbg = &background
-        " Inversion
-        if s:tbg == "dark"
-            set background=light
-        else
-            set background=dark
-        endif
-    endfunction
-    noremap <leader>bg :call ToggleBG()<CR>
-
-    filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
+    filetype plugin indent on   " Automatically detect file types.
     set mouse=a                 " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
+
     set encoding=utf-8
-    set fileencodings=ucs-bom,utf-8,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1,euc-jp,utf-16le,latin1
     set fenc=utf-8 enc=utf-8 tenc=utf-8
+    set fileencodings=ucs-bom,utf-8,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1,euc-jp,utf-16le,latin1
     scriptencoding utf-8
 
     if has('clipboard')
@@ -118,9 +114,8 @@ call plug#end()
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
     set iskeyword-=-                    " '-' is an end of word designator
-
-    set viminfo=			                    " disable .viminfo file
-    set ttyfast                           " send more chars while redrawing
+    set ttyfast                         " send more chars while redrawing
+    set updatetime=250
 
     " disable sound on errors
     set visualbell
@@ -133,9 +128,11 @@ call plug#end()
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
     " Setting up the directories {
-        set nobackup                  " Backups are nice ...
+        set backup
+        set backupdir=~/.vimbackupdir
         if has('persistent_undo')
             set undofile                " So is persistent undo ...
+            set undodir=~/.undodir
             set undolevels=1000         " Maximum number of changes that can be undone
             set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
         endif
@@ -143,31 +140,25 @@ call plug#end()
 " }
 
 " Vim UI {
-
-
     if filereadable(expand("~/.vim/Plugged/gruvbox/colors/gruvbox.vim"))
         set t_Co=256                " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
         color gruvbox               " Load a colorscheme
     endif
 
-    set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
     set cursorline                  " Highlight current line
-    set numberwidth=4
+    set tabpagemax=15               " Only show 15 tabs
 
     highlight clear SignColumn      " SignColumn should match background
     highlight clear LineNr          " Current line number row will have same background color in relative mode
 
     if has('cmdline_info')
         set ruler                   " Show the ruler
-        set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
         set showcmd                 " Show partial commands in status line and
-                                    " Selected characters/lines in visual mode
     endif
 
     if has('statusline')
         set laststatus=2
-
         " Broken down into easily includeable segments
         set statusline=%<%f\                     " Filename
         set statusline+=%w%h%m%r                 " Options
@@ -182,6 +173,7 @@ call plug#end()
     set backspace=indent,eol,start  " Backspace for dummies
     set linespace=0                 " No extra spaces between rows
     set number                      " Line numbers on
+    set numberwidth=4
     set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
     set hlsearch                    " Highlight search terms
@@ -196,11 +188,9 @@ call plug#end()
     set foldenable                  " Auto fold code
     set list
     set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
-
 " }
 
 " GUI Settings {
-
     " GVIM- (here instead of .gvimrc)
     if has('gui_running')
         set guioptions-=T           " Remove the toolbar
@@ -208,7 +198,7 @@ call plug#end()
         if LINUX() && has("gui_running")
             set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
         elseif OSX() && has("gui_running")
-            set guifont=Monaco:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
+            set guifont=Monaco:h14,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
             colors gruvbox
             set guioptions=aAce
             set showtabline-=0
@@ -220,7 +210,10 @@ call plug#end()
             set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
         endif
     endif
-
+    if !exists(":DiffOrig")
+        command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+              \ | wincmd p | diffthis
+    endif
 " }
 
 " Formatting {
@@ -241,9 +234,7 @@ call plug#end()
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
     " preceding line best in a plugin but here for now.
-
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-
     " Workaround vim-commentary for Haskell
     autocmd FileType haskell setlocal commentstring=--\ %s
     " Workaround broken colour highlighting in Haskell
@@ -252,7 +243,6 @@ call plug#end()
 " }
 
 " Key (re)Mappings {
-
     " Wrapped lines goes down/up to next row, rather than next line in file.
     noremap j gj
     noremap k gk
@@ -280,7 +270,7 @@ call plug#end()
     cmap Tabe tabe
 
     " Yank from the cursor to the end of the line, to be consistent with C and D.
-    nnoremap Y y$
+    nnoremap Y 0y$
 
     " Code folding options
     nmap <leader>f0 :set foldlevel=0<CR>
@@ -327,12 +317,10 @@ call plug#end()
     " and ask which one to jump to
     nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
-    " Easier horizontal scrolling
-    map zl zL
-    map zh zH
-
     imap jj <ESC>
 
+    " remap vim 0
+    map 0 ^
     " c-j,k for buffer switch
     nn <c-j> :bn<cr>
     nn <c-k> :bp<cr>
@@ -346,9 +334,6 @@ call plug#end()
     imap <M-b> <S-Left>
     imap <M-n> <Down>
     imap <M-p> <Up>
-
-    " remap vim 0
-    map 0 ^
 
     " return current opened file's dirctory
     cnoremap %% <c-r>=expand('%:h').'/'<cr>
@@ -365,18 +350,16 @@ call plug#end()
     nmap <leader>sv :set mouse=v<cr>
     nmap <leader>sa :set mouse=a<cr>
 
-    map  <leader>ta :Tabularize /
-    nmap <leader>w  :w !sudo tee %<cr>
-    nmap <silent> <leader>q  :bd<cr>
+    nmap <leader>sw  :w !sudo tee %<cr>
+    nmap <leader>w   :w!<cr>
+    nmap <silent> <leader>fd :bd<cr>
+    nmap <silent> <space>qq :q<cr>
 
     set ofu=syntaxcomplete#Complete
-    " Easier formatting
-    nnoremap <silent> <leader>q gwip
 
     " FIXME: Revert this f70be548
     " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
     map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
-
 " }
 
 " Plugins {
@@ -457,22 +440,22 @@ call plug#end()
 
     " Tabularize {
         if isdirectory(expand("~/.vim/Plugged/tabular"))
-            nmap <Leader>a& :Tabularize /&<CR>
-            vmap <Leader>a& :Tabularize /&<CR>
-            nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-            vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-            nmap <Leader>a=> :Tabularize /=><CR>
-            vmap <Leader>a=> :Tabularize /=><CR>
-            nmap <Leader>a: :Tabularize /:<CR>
-            vmap <Leader>a: :Tabularize /:<CR>
-            nmap <Leader>a:: :Tabularize /:\zs<CR>
-            vmap <Leader>a:: :Tabularize /:\zs<CR>
-            nmap <Leader>a, :Tabularize /,<CR>
-            vmap <Leader>a, :Tabularize /,<CR>
-            nmap <Leader>a,, :Tabularize /,\zs<CR>
-            vmap <Leader>a,, :Tabularize /,\zs<CR>
-            nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-            vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+            nmap <Leader>a&     : Tabularize /&<CR>
+            vmap <Leader>a&     : Tabularize /&<CR>
+            nmap <Leader>a=     : Tabularize /^[^=]*\zs=<CR>
+            vmap <Leader>a=     : Tabularize /^[^=]*\zs=<CR>
+            nmap <Leader>a=>    : Tabularize /=><CR>
+            vmap <Leader>a=>    : Tabularize /=><CR>
+            nmap <Leader>a:     : Tabularize / : <CR>
+            vmap <Leader>a:     : Tabularize / : <CR>
+            nmap <Leader>a::    : Tabularize / : \zs<CR>
+            vmap <Leader>a::    : Tabularize / : \zs<CR>
+            nmap <Leader>a,     : Tabularize /,<CR>
+            vmap <Leader>a,     : Tabularize /,<CR>
+            nmap <Leader>a,,    : Tabularize /,\zs<CR>
+            vmap <Leader>a,,    : Tabularize /,\zs<CR>
+            nmap <Leader>a<Bar> : Tabularize /<Bar><CR>
+            vmap <Leader>a<Bar> : Tabularize /<Bar><CR>
         endif
     " }
 
@@ -622,12 +605,10 @@ call plug#end()
             endif
             if !exists('g:airline_powerline_fonts')
                 " Use the default set of separators with a few customizations
-                let g:airline_left_sep='›'  " Slightly fancier than '>'
-                let g:airline_right_sep='‹' " Slightly fancier than '<'
             endif
         endif
     " }
-    " fugitive  (
+    " fugitive  {
         if isdirectory(expand("~/.vim/Plugged/vim-fugitive/"))
             nnoremap <silent> <leader>gs :Gstatus<CR>
             nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -636,9 +617,35 @@ call plug#end()
             nnoremap <silent> <leader>gp :Git push<CR>
         endif
     " }
+    " syntastic {
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+    " }
+    " changesPlug
+
+    let g:changes_sign_text_utf8=1
+
+    " }
 " }
 
 " Functions {
+    " Allow to trigger background
+    function! ToggleBG()
+        let s:tbg = &background
+        " Inversion
+        if s:tbg == "dark"
+            set background=light
+        else
+            set background=dark
+        endif
+    endfunction
+    noremap <leader>bg :call ToggleBG()<CR>
 
     " Strip whitespace {
     function! StripTrailingWhitespace()
@@ -653,5 +660,4 @@ call plug#end()
         call cursor(l, c)
     endfunction
     " }
-
 " }
