@@ -18,6 +18,7 @@ Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
 Plug 'nanotech/jellybeans.vim'
 Plug 'tomasr/molokai'
+Plug 'w0ng/vim-hybrid'
 "}
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
@@ -27,8 +28,8 @@ Plug 'godlygeek/tabular'
 Plug 'vim-scripts/matchit.zip'
 Plug 'pelodelfuego/vim-swoop'
 Plug 'vim-scripts/SearchComplete'
-Plug 'vim-scripts/SQLComplete.vim'
-Plug 'gaving/vim-sqlcase'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'gaving/vim-sqlcase', { 'for': 'sql' }
 Plug 'itchyny/calendar.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'vimwiki/vimwiki'
@@ -40,15 +41,17 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-"Plug 'mhinz/vim-signify'
-"Plug 'chrisbra/changesplugin'
 Plug 'ervandew/supertab'
-Plug 'sirver/ultisnips'
+Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'vim-scripts/taglist.vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Raimondi/delimitMate'
 Plug 'kana/vim-repeat'
 Plug 'vimcn/vimcdoc'
+"Plug 'mhinz/vim-signify'
+"Plug 'chrisbra/changesplugin'
+"Plug 'vim-scripts/SQLComplete.vim'
+"Plug 'roxma/nvim-completion-manager'
 call plug#end()
 
 " Environment {
@@ -66,6 +69,7 @@ call plug#end()
 
     " Basics {
         set nocompatible                " Must be first line
+    "}
 
     " Arrow Key Fix {
         " https://github.com/spf13/spf13-vim/issues/780
@@ -115,11 +119,18 @@ call plug#end()
     " set it to the first line when editing a git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
+    " Windows {
+        if WINDOWS()
+            set viminfo+=n~/.cache/_viminfo
+        endif
+    " }
+
     " Setting up the directories {
-        set nobackup
+        set backup
+        set backupdir=~/.cache/backup
         if has('persistent_undo')
             set undofile                " So is persistent undo ...
-            set undodir=~/.undodir
+            set undodir=~/.cache/undo/
             set undolevels=1000         " Maximum number of changes that can be undone
             set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
         endif
@@ -146,7 +157,6 @@ call plug#end()
 
     set backspace=indent,eol,start      " Backspace for dummies
     set linespace=0                     " No extra spaces between rows
-    set number                          " Line numbers on
     set numberwidth=4
     set showmatch                       " Show matching brackets/parenthesis
     set incsearch                       " Find as you type search
@@ -181,8 +191,9 @@ call plug#end()
             set go=
             color Tomorrow-Night
             set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
-            let g:MyVimLib = 'gvimfullscreen.dll'
-            let g:VimAlpha = 245
+            "set guifontwide=YouYuan:h10:cGB2312
+            let g:MyVimLib   = 'gvimfullscreen.dll'
+            let g:VimAlpha   = 245
             let g:VimTopMost = 0
 
             if !exists('g:screen_size_restore_pos')
@@ -219,7 +230,6 @@ call plug#end()
     set splitbelow                      " Puts new split windows to the bottom of the current
     "set matchpairs+=<:>                " Match, to be used with %
     set pastetoggle=<F12>               " pastetoggle (sane indentation on pastes)
-    autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
     autocmd BufNewFile,BufRead *.sop    set filetype=c
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
@@ -598,18 +608,27 @@ call plug#end()
         endif
     " }
     " syntastic {
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
+        set statusline+=%#warningmsg#
+        set statusline+=%{SyntasticStatuslineFlag()}
+        set statusline+=%*
 
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
+        let g:syntastic_always_populate_loc_list = 1
+        let g:syntastic_auto_loc_list = 1
+        let g:syntastic_check_on_open = 1
+        let g:syntastic_check_on_wq = 0
     " }
-    " changesPlug
+    " ultisnips {
+        " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+        let g:UltiSnipsExpandTrigger="<c-tab>"
+        let g:UltiSnipsJumpForwardTrigger="<c-b>"
+        let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-    let g:changes_sign_text_utf8=1
+        " If you want :UltiSnipsEdit to split your window.
+        let g:UltiSnipsEditSplit="vertical"
+    " }
+    " YouCompleteMe {
+        nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        let g:ycm_key_invoke_completion = '<C-a>'
 
     " }
 " }
@@ -631,7 +650,7 @@ call plug#end()
     " }
 
     "quick format multi line data for sql
-    function FormatSqlData()
+    function! FormatSqlData()
         silent! set ft=sql
         silent! %s/^\(.*\)$/'\1',/
         silent! 1 s/^/(/
@@ -641,6 +660,21 @@ call plug#end()
     endfunction
     command! -bang -nargs=* FormatSqlData :call FormatSqlData(<bang> <args>)
     " }
+
+    " Cycle through relativenumber + number, number (only), and no numbering.
+    function! CycleNumbering()
+        if exists('+relativenumber')
+            execute {
+             \ '00': 'set relativenumber   | set number',
+             \ '01': 'set norelativenumber | set number',
+             \ '10': 'set norelativenumber | set nonumber',
+             \ '11': 'set norelativenumber | set number' }[&number . &relativenumber]
+        else
+            " No relative numbering, just toggle numbers on and off.
+            set number!
+        endif
+    endfunction
+    command! -bang -nargs=* CycleNumbering :call CycleNumbering(<bang> <args>)
 
     " Allow to trigger background
     function! ToggleBG()
@@ -658,7 +692,7 @@ call plug#end()
       if has('amiga')
         return "s:.vimsize"
       elseif has('win32')
-        return $HOME.'\_vimsize'
+        return $HOME.'\.cache\_vimsize'
       else
         return $HOME.'/.vimsize'
       endif
