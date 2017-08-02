@@ -48,6 +48,7 @@ Plug 'vim-scripts/taglist.vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Raimondi/delimitMate'
 Plug 'kana/vim-repeat'
+Plug 'vimcn/vimcdoc'
 call plug#end()
 
 " Environment {
@@ -64,19 +65,7 @@ call plug#end()
     " }
 
     " Basics {
-        set nocompatible        " Must be first line
-        if !WINDOWS()
-            set shell=/bin/sh
-        endif
-    " }
-
-    " Windows Compatible {
-        " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
-        " across (heterogeneous) systems easier.
-        if WINDOWS()
-          set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-        endif
-    " }
+        set nocompatible                " Must be first line
 
     " Arrow Key Fix {
         " https://github.com/spf13/spf13-vim/issues/780
@@ -87,16 +76,15 @@ call plug#end()
 " }
 
 " General {
-    set background=dark         " Assume a dark background
-    syntax on                   " Syntax highlighting
-    filetype plugin indent on   " Automatically detect file types.
-    set mouse=a                 " Automatically enable mouse usage
-    set mousehide               " Hide the mouse cursor while typing
-
+    set background=dark                 " Assume a dark background
+    syntax on                           " Syntax highlighting
+    filetype plugin indent on           " Automatically detect file types.
+    set mouse=a                         " Automatically enable mouse usage
+    set mousehide                       " Hide the mouse cursor while typing
     set encoding=utf-8
-    set fenc=utf-8 enc=utf-8 tenc=utf-8
-    set fileencodings=ucs-bom,utf-8,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1,euc-jp,utf-16le,latin1
     scriptencoding utf-8
+    set termencoding=cp936
+    set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1,euc-jp,utf-16le,latin1
 
     if has('clipboard')
         if has('unnamedplus')  " When possible use + register for copy-paste
@@ -107,7 +95,8 @@ call plug#end()
     endif
 
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
-    set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
+    set viewoptions=folds,options,cursor,unix,slash
+                                        " Better Unix / Windows compatibility
     set virtualedit=onemore             " Allow for cursor beyond last character
     set history=1000                    " Store a ton of history (default is 20)
     set hidden                          " Allow buffer switching without saving
@@ -117,8 +106,7 @@ call plug#end()
     set ttyfast                         " send more chars while redrawing
     set updatetime=250
 
-    " disable sound on errors
-    set visualbell
+    set visualbell                      " disable sound on errors
     set noerrorbells
     set t_vb=
     set tm=500
@@ -128,8 +116,7 @@ call plug#end()
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
     " Setting up the directories {
-        set backup
-        set backupdir=~/.vimbackupdir
+        set nobackup
         if has('persistent_undo')
             set undofile                " So is persistent undo ...
             set undodir=~/.undodir
@@ -141,60 +128,48 @@ call plug#end()
 
 " Vim UI {
     if filereadable(expand("~/.vim/Plugged/gruvbox/colors/gruvbox.vim"))
-        set t_Co=256                " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-        color gruvbox               " Load a colorscheme
+        set t_Co=256                    " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+        color gruvbox                   " Load a colorscheme
     endif
 
-    set showmode                    " Display the current mode
-    set cursorline                  " Highlight current line
-    set tabpagemax=15               " Only show 15 tabs
+    set showmode                        " Display the current mode
+    set cursorline                      " Highlight current line
+    set tabpagemax=15                   " Only show 15 tabs
 
-    highlight clear SignColumn      " SignColumn should match background
-    highlight clear LineNr          " Current line number row will have same background color in relative mode
+    highlight clear SignColumn          " SignColumn should match background
+    highlight clear LineNr              " Current line number row will have same background color in relative mode
 
     if has('cmdline_info')
-        set ruler                   " Show the ruler
-        set showcmd                 " Show partial commands in status line and
+        set ruler                       " Show the ruler
+        set showcmd                     " Show partial commands in status line and
     endif
 
-    if has('statusline')
-        set laststatus=2
-        " Broken down into easily includeable segments
-        set statusline=%<%f\                     " Filename
-        set statusline+=%w%h%m%r                 " Options
-        if !exists('g:override_spf13_Pluggeds')
-            set statusline+=%{fugitive#statusline()} " Git Hotness
-        endif
-        set statusline+=\ [%{&ff}/%Y]            " Filetype
-        set statusline+=\ [%{getcwd()}]          " Current dir
-        set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-    endif
-
-    set backspace=indent,eol,start  " Backspace for dummies
-    set linespace=0                 " No extra spaces between rows
-    set number                      " Line numbers on
+    set backspace=indent,eol,start      " Backspace for dummies
+    set linespace=0                     " No extra spaces between rows
+    set number                          " Line numbers on
     set numberwidth=4
-    set showmatch                   " Show matching brackets/parenthesis
-    set incsearch                   " Find as you type search
-    set hlsearch                    " Highlight search terms
-    set winminheight=0              " Windows can be 0 line high
-    set ignorecase                  " Case insensitive search
-    set smartcase                   " Case sensitive when uc present
-    set wildmenu                    " Show list instead of just completing
-    set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
-    set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
-    set scrolljump=5                " Lines to scroll when cursor leaves screen
-    set scrolloff=3                 " Minimum lines to keep above and below cursor
-    set foldenable                  " Auto fold code
+    set showmatch                       " Show matching brackets/parenthesis
+    set incsearch                       " Find as you type search
+    set hlsearch                        " Highlight search terms
+    set winminheight=0                  " Windows can be 0 line high
+    set ignorecase                      " Case insensitive search
+    set smartcase                       " Case sensitive when uc present
+    set wildmenu                        " Show list instead of just completing
+    set wildmode=list:longest,full      " Command <Tab> completion, list matches, then longest common part, then all.
+    set whichwrap=b,s,h,l,<,>,[,]       " Backspace and cursor keys wrap too
+    set scrolljump=5                    " Lines to scroll when cursor leaves screen
+    set scrolloff=3                     " Minimum lines to keep above and below cursor
+    set foldenable                      " Auto fold code
     set list
-    set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
+    set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
+                                        " Highlight problematic whitespace
 " }
 
 " GUI Settings {
     " GVIM- (here instead of .gvimrc)
     if has('gui_running')
-        set guioptions-=T           " Remove the toolbar
-        set lines=40                " 40 lines of text instead of 24
+        set guioptions-=T               " Remove the toolbar
+        set lines=40                    " 40 lines of text instead of 24
         if LINUX() && has("gui_running")
             set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
         elseif OSX() && has("gui_running")
@@ -203,11 +178,26 @@ call plug#end()
             set guioptions=aAce
             set showtabline-=0
         elseif WINDOWS() && has("gui_running")
-            set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+            set go=
+            color Tomorrow-Night
+            set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+            let g:MyVimLib = 'gvimfullscreen.dll'
+            let g:VimAlpha = 245
+            let g:VimTopMost = 0
+
+            if !exists('g:screen_size_restore_pos')
+              let g:screen_size_restore_pos = 1
+            endif
+            if !exists('g:screen_size_by_vim_instance')
+              let g:screen_size_by_vim_instance = 1
+            endif
+            autocmd VimEnter * if g:screen_size_restore_pos == 1 | call ScreenRestore() | endif
+            autocmd VimLeavePre * if g:screen_size_restore_pos == 1 | call ScreenSave() | endif
+            autocmd GUIEnter * call libcallnr(g:MyVimLib, 'SetAlpha', g:VimAlpha)
         endif
     else
         if &term == 'xterm' || &term == 'screen'
-            set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+            set t_Co=256                " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
         endif
     endif
     if !exists(":DiffOrig")
@@ -217,19 +207,20 @@ call plug#end()
 " }
 
 " Formatting {
-    set nowrap                      " Do not wrap long lines
-    set autoindent                  " Indent at the same level of the previous line
-    set shiftwidth=4                " Use indents of 4 spaces
-    set expandtab                   " Tabs are spaces, not tabs
-    set tabstop=4                   " An indentation every four columns
-    set softtabstop=4               " Let backspace delete indent
-    set smarttab                    " Insert tabs on the start of a line according to
-    set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
-    set splitright                  " Puts new vsplit windows to the right of the current
-    set splitbelow                  " Puts new split windows to the bottom of the current
-    "set matchpairs+=<:>            " Match, to be used with %
-    set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
+    set nowrap                          " Do not wrap long lines
+    set autoindent                      " Indent at the same level of the previous line
+    set shiftwidth=4                    " Use indents of 4 spaces
+    set expandtab                       " Tabs are spaces, not tabs
+    set tabstop=4                       " An indentation every four columns
+    set softtabstop=4                   " Let backspace delete indent
+    set smarttab                        " Insert tabs on the start of a line according to
+    set nojoinspaces                    " Prevents inserting two spaces after punctuation on a join (J)
+    set splitright                      " Puts new vsplit windows to the right of the current
+    set splitbelow                      " Puts new split windows to the bottom of the current
+    "set matchpairs+=<:>                " Match, to be used with %
+    set pastetoggle=<F12>               " pastetoggle (sane indentation on pastes)
     autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+    autocmd BufNewFile,BufRead *.sop    set filetype=c
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
@@ -243,34 +234,38 @@ call plug#end()
 " }
 
 " Key (re)Mappings {
+
+    imap jj <ESC>
+
     " Wrapped lines goes down/up to next row, rather than next line in file.
     noremap j gj
     noremap k gk
 
-    " The following two lines conflict with moving to top and
-    " bottom of the screen
-    " If you prefer that functionality, add the following to your
-    " .vimrc.before.local file:
-    "   let g:spf13_no_fastTabs = 1
-    map <S-H> gT
-    map <S-L> gt
+    " Visual shifting (does not exit Visual mode)
+    vnoremap < <gv
+    vnoremap > >gv
+
+    " Yank from the cursor to the end of the line, to be consistent with C and D.
+    nnoremap Y y$
+
+    nmap <c-enter>   : call ToggleFullScreen()<cr>
+    nmap <s-r> <esc> : call SwitchVimTopMostMode()<cr>
+    nmap <s-w> <esc> : call SetAlpha(-10)<cr>
+    nmap <s-e> <esc> : call SetAlpha(10)<cr>
 
     " Stupid shift key fixes
     if has("user_commands")
-        command! -bang -nargs=* -complete=file E e<bang> <args>
-        command! -bang -nargs=* -complete=file W w<bang> <args>
+        command! -bang -nargs=* -complete=file E   e<bang> <args>
+        command! -bang -nargs=* -complete=file W   w<bang> <args>
         command! -bang -nargs=* -complete=file Wq wq<bang> <args>
         command! -bang -nargs=* -complete=file WQ wq<bang> <args>
         command! -bang Wa wa<bang>
         command! -bang WA wa<bang>
-        command! -bang Q q<bang>
+        command! -bang Q   q<bang>
         command! -bang QA qa<bang>
         command! -bang Qa qa<bang>
+        command! -bang Tabe tabe<bang>
     endif
-    cmap Tabe tabe
-
-    " Yank from the cursor to the end of the line, to be consistent with C and D.
-    nnoremap Y 0y$
 
     " Code folding options
     nmap <leader>f0 :set foldlevel=0<CR>
@@ -294,9 +289,6 @@ call plug#end()
     cmap cwd lcd %:p:h
     cmap cd. lcd %:p:h
 
-    " Visual shifting (does not exit Visual mode)
-    vnoremap < <gv
-    vnoremap > >gv
 
     " Allow using the repeat operator with a visual selection (!)
     " http://stackoverflow.com/a/8064607/127816
@@ -317,13 +309,10 @@ call plug#end()
     " and ask which one to jump to
     nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
-    imap jj <ESC>
-
-    " remap vim 0
-    map 0 ^
     " c-j,k for buffer switch
-    nn <c-j> :bn<cr>
-    nn <c-k> :bp<cr>
+    nmap <c-j> :bn<cr>
+    nmap <c-k> :bp<cr>
+    nmap <tab> <c-w>w
 
     " emacs key bind
     imap <c-a> <HOME>
@@ -335,6 +324,9 @@ call plug#end()
     imap <M-n> <Down>
     imap <M-p> <Up>
 
+    " remap vim 0
+    map 0 ^
+
     " return current opened file's dirctory
     cnoremap %% <c-r>=expand('%:h').'/'<cr>
 
@@ -344,22 +336,14 @@ call plug#end()
 
     " quick open vimrc in a new tab
     nmap <leader>v  :e $MYVIMRC<cr>
-    map  <leader>0  :topleft 100 :split $HOME/.vim/README.md<cr>
+    map  <leader>0  :topleft 100 :split $HOME/vimfiles/README.md<cr>
 
     " mouse
     nmap <leader>sv :set mouse=v<cr>
     nmap <leader>sa :set mouse=a<cr>
 
-    nmap <leader>sw  :w !sudo tee %<cr>
-    nmap <leader>w   :w!<cr>
-    nmap <silent> <leader>fd :bd<cr>
-    nmap <silent> <space>qq :q<cr>
-
-    set ofu=syntaxcomplete#Complete
-
-    " FIXME: Revert this f70be548
-    " fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
-    map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
+    nmap <leader>w  :w !sudo tee %<cr>
+    nmap <silent> <leader>q  :bd<cr>
 " }
 
 " Plugins {
@@ -597,12 +581,8 @@ call plug#end()
         " See `:echo g:airline_theme_map` for some more choices
         " Default in terminal vim is 'dark'
         if isdirectory(expand("~/.vim/Plugged/vim-airline-themes/"))
-            let g:airline_solarized_dark_inactive_border  = 1
             let g:airline#extensions#tabline#show_buffers = 1
             let g:airline#extensions#tabline#tab_nr_type  = 1
-            if !exists('g:airline_theme')
-                let g:airline_theme = 'gruvbox'
-            endif
             if !exists('g:airline_powerline_fonts')
                 " Use the default set of separators with a few customizations
             endif
@@ -633,8 +613,35 @@ call plug#end()
 
     " }
 " }
-
 " Functions {
+
+    " Clean whitespace {
+    function! DelTrailingWhitespace()
+        " Preparation: save last search, and cursor position.
+        let _s=@/
+        let l = line(".")
+        let c = col(".")
+        " do the business:
+        %s/\s\+$//e
+        " clean up: restore previous search history, and cursor position
+        let @/=_s
+        call cursor(l, c)
+    endfunction
+    command! -bang -nargs=* DelTrailingWhitespace :call DelTrailingWhitespace(<bang> <args>)
+    " }
+
+    "quick format multi line data for sql
+    function FormatSqlData()
+        silent! set ft=sql
+        silent! %s/^\(.*\)$/'\1',/
+        silent! 1 s/^/(/
+        silent! $ s/,$/)/
+        silent! noh
+        silent! 1,$ y
+    endfunction
+    command! -bang -nargs=* FormatSqlData :call FormatSqlData(<bang> <args>)
+    " }
+
     " Allow to trigger background
     function! ToggleBG()
         let s:tbg = &background
@@ -647,17 +654,76 @@ call plug#end()
     endfunction
     noremap <leader>bg :call ToggleBG()<CR>
 
-    " Strip whitespace {
-    function! StripTrailingWhitespace()
-        " Preparation: save last search, and cursor position.
-        let _s=@/
-        let l = line(".")
-        let c = col(".")
-        " do the business:
-        %s/\s\+$//e
-        " clean up: restore previous search history, and cursor position
-        let @/=_s
-        call cursor(l, c)
+    function! ScreenFilename()
+      if has('amiga')
+        return "s:.vimsize"
+      elseif has('win32')
+        return $HOME.'\_vimsize'
+      else
+        return $HOME.'/.vimsize'
+      endif
     endfunction
-    " }
+
+   function! ScreenRestore()
+     " Restore window size (columns and lines) and position
+     " from values stored in vimsize file.
+     " Must set font first so columns and lines are based on font size.
+     let f = ScreenFilename()
+     if has("gui_running") && g:screen_size_restore_pos && filereadable(f)
+       let vim_instance = (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
+       for line in readfile(f)
+         let sizepos = split(line)
+         if len(sizepos) == 5 && sizepos[0] == vim_instance
+           silent! execute "set columns=".sizepos[1]." lines=".sizepos[2]
+           silent! execute "winpos ".sizepos[3]." ".sizepos[4]
+           return
+         endif
+       endfor
+     endif
+   endfunction
+
+   function! ScreenSave()
+     " Save window size and position.
+     if has("gui_running") && g:screen_size_restore_pos
+         let vim_instance = (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
+         let data = vim_instance . ' ' . &columns . ' ' . &lines . ' ' .
+                     \ (getwinposx()<0?0:getwinposx()) . ' ' .
+                     \ (getwinposy()<0?0:getwinposy())
+         let f = ScreenFilename()
+         if filereadable(f)
+             let lines = readfile(f)
+             call filter(lines, "v:val !~ '^" . vim_instance . "\\>'")
+             call add(lines, data)
+         else
+             let lines = [data]
+         endif
+         call writefile(lines, f)
+     endif
+   endfunction
+
+   function! ToggleFullScreen()
+       call SetAlpha(100)
+       call SwitchVimTopMostMode()
+       call libcall(g:MyVimLib, 'ToggleFullScreen', 1)
+   endfunction
+
+   function! SetAlpha(alpha)
+       let g:VimAlpha = g:VimAlpha + a:alpha
+       if g:VimAlpha < 180
+           let g:VimAlpha = 180
+       endif
+       if g:VimAlpha > 255
+           let g:VimAlpha = 255
+       endif
+       call libcall(g:MyVimLib, 'SetAlpha', g:VimAlpha)
+   endfunction
+
+   function! SwitchVimTopMostMode()
+       if g:VimTopMost == 0
+           let g:VimTopMost = 1
+       else
+           let g:VimTopMost = 0
+       endif
+       call libcall(g:MyVimLib, 'EnableTopMost', g:VimTopMost)
+   endfunction
 " }
