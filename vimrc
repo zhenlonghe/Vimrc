@@ -140,7 +140,7 @@ call plug#end()
 " Vim UI {
     if filereadable(expand("~/.vim/Plugged/gruvbox/colors/gruvbox.vim"))
         set t_Co=256                    " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-        color gruvbox                   " Load a colorscheme
+        color Tomorrow-Night            " Load a colorscheme
     endif
 
     set showmode                        " Display the current mode
@@ -184,7 +184,7 @@ call plug#end()
             set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
         elseif OSX() && has("gui_running")
             set guifont=Monaco:h14,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
-            colors gruvbox
+            colors Tomorrow-Night
             set guioptions=aAce
             set showtabline-=0
         elseif WINDOWS() && has("gui_running")
@@ -619,7 +619,6 @@ call plug#end()
     " }
     " ultisnips {
         " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-        let g:UltiSnipsExpandTrigger="<c-tab>"
         let g:UltiSnipsJumpForwardTrigger="<c-b>"
         let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
