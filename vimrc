@@ -27,6 +27,7 @@ Plug 'morhetz/gruvbox'
 Plug 'nanotech/jellybeans.vim'
 Plug 'tomasr/molokai'
 Plug 'w0ng/vim-hybrid'
+Plug 'joshdick/onedark.vim'
 "}
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
@@ -45,7 +46,6 @@ Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 "Plug 'scrooloose/syntastic'
-Plug 'w0rp/ale'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-fugitive'
@@ -114,14 +114,14 @@ call plug#end()
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
     set viewoptions=folds,options,cursor,unix,slash
                                         " Better Unix / Windows compatibility
-    set virtualedit=onemore             " Allow for cursor beyond last character
-    set history=1000                    " Store a ton of history (default is 20)
     set hidden                          " Allow buffer switching without saving
+    set ttyfast                         " send more chars while redrawing
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
     set iskeyword-=-                    " '-' is an end of word designator
-    set ttyfast                         " send more chars while redrawing
+    set history=1000                    " Store a ton of history (default is 20)
     set updatetime=250
+    set virtualedit=onemore             " Allow for cursor beyond last character
 
     set visualbell                      " disable sound on errors
     set noerrorbells
@@ -359,6 +359,7 @@ call plug#end()
 
     " quick open vimrc in a new tab
     nmap <leader>v  :e $MYVIMRC<cr>
+    nmap <leader>s  :source $MYVIMRC<cr>
     map  <leader>0  :topleft 100 :split $HOME/vimfiles/README.md<cr>
 
     " mouse
@@ -368,8 +369,8 @@ call plug#end()
     nmap <leader>w  :w !sudo tee %<cr>
     nmap <space>w  :w<cr>
     nmap <silent> <leader>q  :bd!<cr>
-    nmap <silent> <space>q  :bd<cr>
-    nmap <silent> <space>c  :qa!<cr>
+    nmap <silent> <space>q   :bd<cr>
+    nmap <silent> <space>c   :qa!<cr>
 " }
 
 " Plugins {
@@ -445,6 +446,18 @@ call plug#end()
             nmap <leader>ss :SessionSave<CR>
             nmap <leader>sc :SessionClose<CR>
         endif
+    " }
+
+    " Vimwiki {
+    let g:vimwiki_camel_case = 0
+    map <leader>a :VimwikiToggleListItem<CR>
+    " diary map
+    map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>5o<ESC>ggJj^i<tab>
+    map <leader>wl :e D:\vimwiki\WorkLog.wiki<CR>
+    if WINDOWS()
+        let g:vimwiki_list = [{'path': 'D:\vimwiki',
+                    \"syntax": "markdown"}]
+    endif
     " }
 
     " ctrlp {
@@ -579,8 +592,6 @@ call plug#end()
         if isdirectory(expand("~/.vim/Plugged/vim-airline-themes/"))
             let g:airline#extensions#tabline#show_buffers = 1
             let g:airline#extensions#tabline#tab_nr_type  = 1
-            let g:airline#extensions#ale#enabled          = 1
-            let g:ale_sign_column_always = 1
             if !exists('g:airline_powerline_fonts')
                 " Use the default set of separators with a few customizations
             endif
