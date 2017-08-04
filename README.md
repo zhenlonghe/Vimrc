@@ -7,22 +7,18 @@ My personal Vim configurations and some plugins which I used in my daily job.
 
 ### Installation and Requisites:
 
-1. BACKUP your `.vim` directory and `.vimrc` first.(IMPORTANT!)
+1. copy files to your home directory:
 
-2. `cd ~` to change directory to your home directory.
-
-3. copy files to your home directory:
-
-   ```shell
+   ```
    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
    ```
 
-4. cd to `zhenlong-vimrc` directory and execute the `:BundleInstall!  ` to get latest version modules:
+2. cd to `zhenlong-vimrc` directory and execute the `:PlugInstall` to get latest version modules:
 
-5. link the vimrc to
+3. link the vimrc to
 
-   ```Shell
+   ```
    ln -s .vim/vimrc .vimrc
    ```
 
@@ -30,13 +26,13 @@ My personal Vim configurations and some plugins which I used in my daily job.
 ### Update:
 
 1. init
-   ```shell
-    `:PlugInstall`
+   ```
+    :PlugInstall
    ```
 
 2. update
-   ```shell
-    `:PlugUpdate`
+   ```
+    :PlugUpdate
    ```
 
 ## Contact

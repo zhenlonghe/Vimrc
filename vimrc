@@ -3,6 +3,14 @@
 "    Author      : zhenlonghe@gmail.com
 "    License     : GPL v2.0
 "---------------------------------------------------------------------------
+" Put these lines at the very end of your vimrc file.
+
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
 
 let mapleader   = ","
 let g:mapleader = ","
@@ -23,20 +31,21 @@ Plug 'w0ng/vim-hybrid'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/matchit.zip'
 Plug 'pelodelfuego/vim-swoop'
 Plug 'vim-scripts/SearchComplete'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'gaving/vim-sqlcase', { 'for': 'sql' }
+Plug 'gaving/vim-sqlcase'
 Plug 'itchyny/calendar.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'vimwiki/vimwiki'
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-fugitive'
@@ -48,6 +57,10 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'Raimondi/delimitMate'
 Plug 'kana/vim-repeat'
 Plug 'vimcn/vimcdoc'
+Plug 'Shougo/denite.nvim'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/fzf'
+Plug '~/autocmds'
 "Plug 'mhinz/vim-signify'
 "Plug 'chrisbra/changesplugin'
 "Plug 'vim-scripts/SQLComplete.vim'
@@ -68,7 +81,7 @@ call plug#end()
     " }
 
     " Basics {
-        set nocompatible                " Must be first line
+        set nocompatible
     "}
 
     " Arrow Key Fix {
@@ -258,10 +271,10 @@ call plug#end()
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
 
-    nmap <c-enter>   : call ToggleFullScreen()<cr>
-    nmap <s-r> <esc> : call SwitchVimTopMostMode()<cr>
-    nmap <s-w> <esc> : call SetAlpha(-10)<cr>
-    nmap <s-e> <esc> : call SetAlpha(10)<cr>
+    nmap <c-enter>   :call ToggleFullScreen()<cr>
+    nmap <s-r> :call SwitchVimTopMostMode()<cr>
+    nmap <s-w> :call SetAlpha(-10)<cr>
+    nmap <s-e> :call SetAlpha(10)<cr>
 
     " Stupid shift key fixes
     if has("user_commands")
@@ -353,7 +366,10 @@ call plug#end()
     nmap <leader>sa :set mouse=a<cr>
 
     nmap <leader>w  :w !sudo tee %<cr>
-    nmap <silent> <leader>q  :bd<cr>
+    nmap <space>w  :w<cr>
+    nmap <silent> <leader>q  :bd!<cr>
+    nmap <silent> <space>q  :bd<cr>
+    nmap <silent> <space>c  :qa!<cr>
 " }
 
 " Plugins {
@@ -364,37 +380,6 @@ call plug#end()
         endif
         if isdirectory(expand("~/.vim/Plugged/matchit.zip"))
             let b:match_ignorecase = 1
-        endif
-    " }
-
-    " OmniComplete {
-        " To disable omni complete, add the following to your .vimrc.before.local file:
-        "   let g:spf13_no_omni_complete = 1
-        if !exists('g:spf13_no_omni_complete')
-            if has("autocmd") && exists("+omnifunc")
-                autocmd Filetype *
-                    \if &omnifunc == "" |
-                    \setlocal omnifunc=syntaxcomplete#Complete |
-                    \endif
-            endif
-
-            hi Pmenu  guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
-            hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
-            hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
-
-            " Some convenient mappings
-            "inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
-            if exists('g:spf13_map_cr_omni_complete')
-                inoremap <expr> <CR>     pumvisible() ? "\<C-y>" : "\<CR>"
-            endif
-            inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-            inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-            inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
-            inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
-
-            " Automatically open and close the popup menu / preview window
-            au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-            set completeopt=menu,preview,longest
         endif
     " }
 
@@ -465,6 +450,7 @@ call plug#end()
     " ctrlp {
         if isdirectory(expand("~/.vim/Plugged/ctrlp.vim/"))
             let g:ctrlp_working_path_mode = 'ra'
+            let g:ctrlp_cmd = 'CtrlPMRU'
             nnoremap <silent> <D-t> :CtrlP<CR>
             nnoremap <silent> <D-r> :CtrlPMRU<CR>
             let g:ctrlp_custom_ignore = {
@@ -593,6 +579,8 @@ call plug#end()
         if isdirectory(expand("~/.vim/Plugged/vim-airline-themes/"))
             let g:airline#extensions#tabline#show_buffers = 1
             let g:airline#extensions#tabline#tab_nr_type  = 1
+            let g:airline#extensions#ale#enabled          = 1
+            let g:ale_sign_column_always = 1
             if !exists('g:airline_powerline_fonts')
                 " Use the default set of separators with a few customizations
             endif
@@ -607,16 +595,7 @@ call plug#end()
             nnoremap <silent> <leader>gp :Git push<CR>
         endif
     " }
-    " syntastic {
-        set statusline+=%#warningmsg#
-        set statusline+=%{SyntasticStatuslineFlag()}
-        set statusline+=%*
 
-        let g:syntastic_always_populate_loc_list = 1
-        let g:syntastic_auto_loc_list = 1
-        let g:syntastic_check_on_open = 1
-        let g:syntastic_check_on_wq = 0
-    " }
     " ultisnips {
         " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
         let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -625,12 +604,8 @@ call plug#end()
         " If you want :UltiSnipsEdit to split your window.
         let g:UltiSnipsEditSplit="vertical"
     " }
-    " YouCompleteMe {
-        nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-        let g:ycm_key_invoke_completion = '<C-a>'
-
-    " }
 " }
+
 " Functions {
 
     " Clean whitespace {
@@ -648,7 +623,7 @@ call plug#end()
     command! -bang -nargs=* DelTrailingWhitespace :call DelTrailingWhitespace(<bang> <args>)
     " }
 
-    "quick format multi line data for sql
+    "quick format multi line data for sql {
     function! FormatSqlData()
         silent! set ft=sql
         silent! %s/^\(.*\)$/'\1',/
@@ -658,6 +633,35 @@ call plug#end()
         silent! 1,$ y
     endfunction
     command! -bang -nargs=* FormatSqlData :call FormatSqlData(<bang> <args>)
+    " }
+
+    " highlight active windows {
+    if exists('+colorcolumn')
+        function! s:DimInactiveWindows()
+            for i in range(1, tabpagewinnr(tabpagenr(), '$'))
+                let l:range = ""
+                if i != winnr()
+                    if &wrap
+                        " HACK: when wrapping lines is enabled, we use the maximum number
+                        " of columns getting highlighted. This might get calculated by
+                        " looking for the longest visible line and using a multiple of
+                        " winwidth().
+                        let l:width=256 " max
+                    else
+                        let l:width=winwidth(i)
+                    endif
+                    let l:range = join(range(1, l:width), ',')
+                endif
+                call setwinvar(i, '&colorcolumn', l:range)
+            endfor
+        endfunction
+        augroup DimInactiveWindows
+            au!
+            au WinEnter * call s:DimInactiveWindows()
+            au WinEnter * set cursorline
+            au WinLeave * set nocursorline
+        augroup END
+    endif
     " }
 
     " Cycle through relativenumber + number, number (only), and no numbering.
