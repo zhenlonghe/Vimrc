@@ -1,40 +1,51 @@
-This zhenlong's vimrc.
-
+This zhenlong's Vimrc.
+=========================
 
 My personal Vim configurations and some plugins which I used in my daily job.
+I use vim-plug to manage all my plugins, and this config compatible with
+Windows, Linux and OS X.
 
 ## Usage
 
 ### Installation and Requisites:
 
-1. copy files to your home directory:
+* copy files to your home directory:
 
    ```
    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
    ```
 
-2. cd to `zhenlong-vimrc` directory and execute the `:PlugInstall` to get latest version modules:
-
-3. link the vimrc to
+* link the vimrc to
 
    ```
    ln -s .vim/vimrc .vimrc
    ```
 
+* open vim and execute the `:PlugInstall` to get latest version modules:
 
-### Update:
 
-1. init
+### Update
+
+* init or add new plugin
+
    ```
     :PlugInstall
    ```
 
-2. update
+* update
+
    ```
     :PlugUpdate
    ```
 
+* update vim-plug self
+
+    ```
+    :PlugUpgrade
+    ```
+
 ## Contact
 
-Enjoy it, and if there's any question or comment, feel free to let me know :)
+Enjoy it, and if there's any question or comment, feel free to let me know.
+Happy Coding :)
