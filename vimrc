@@ -1,4 +1,4 @@
-"---------------------------------------------------------------------------
+"------------------------------------------------------------------------------
 "    Description  : zhenlong's vimrc
 "    Author       : zhenlonghe@gmail.com
 "    License      : GPL v2.0
@@ -11,7 +11,7 @@
 "                   Key (re)Mappings
 "                   Plugins
 "                   Functions
-"---------------------------------------------------------------------------
+"------------------------------------------------------------------------------
 
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
@@ -60,7 +60,7 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'tomasr/molokai'
 Plug 'w0ng/vim-hybrid'
 Plug 'joshdick/onedark.vim'
-" }
+"}
 call plug#end()
 
 " Environment {
@@ -74,7 +74,7 @@ call plug#end()
         silent function! WINDOWS()
             return  (has('win32') || has('win64'))
         endfunction
-    " }
+    "}
 
     " Basics {
         set nocompatible
@@ -85,8 +85,8 @@ call plug#end()
         if &term[:4] == "xterm" || &term[:5] == 'screen' || &term[:3] == 'rxvt'
             inoremap <silent> <C-[>OC <RIGHT>
         endif
-    " }
-" }
+    "}
+"}
 
 " General {
     set background=dark                 " Assume a dark background
@@ -97,8 +97,7 @@ call plug#end()
     set encoding=utf-8
     scriptencoding utf-8
     set termencoding=cp936
-    set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1,euc-jp,utf-16le,latin1
-
+    set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,gbk,euc-kr,utf-bom
     if has('clipboard')
         if has('unnamedplus')  " When possible use + register for copy-paste
             set clipboard=unnamed,unnamedplus
@@ -107,7 +106,7 @@ call plug#end()
         endif
     endif
 
-    set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
+    set shortmess+=filmnrxoOtT          " Abbrev. of messages
     set viewoptions=folds,options,cursor,unix,slash
                                         " Better Unix / Windows compatibility
     set hidden                          " Allow buffer switching without saving
@@ -126,13 +125,14 @@ call plug#end()
 
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message
-    au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+    au FileType gitcommit au! BufEnter COMMIT_EDITMSG
+                \ call setpos('.', [0, 1, 1, 0])
 
     " Windows {
         if WINDOWS()
             set viminfo+=n~/.cache/_viminfo
         endif
-    " }
+    "}
 
     " Setting up the directories {
         set backup
@@ -140,26 +140,27 @@ call plug#end()
         if has('persistent_undo')
             set undofile                " So is persistent undo ...
             set undodir=~/.cache/undo/
-            set undolevels=1000         " Maximum number of changes that can be undone
-            set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
+            set undolevels=1000         " Max number of changes can be undone
+            set undoreload=10000        " Max number lines to save for undo
         endif
-    " }
-" }
+    "}
+"}
 
 " Vim UI {
-    set t_Co=256                    " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-    color Tomorrow-Night            " Load a colorscheme
+    set t_Co=256                        " Enable 256 colors
+    color Tomorrow-Night                " Load a colorscheme
 
     set showmode                        " Display the current mode
     set cursorline                      " Highlight current line
     set tabpagemax=15                   " Only show 15 tabs
 
     highlight clear SignColumn          " SignColumn should match background
-    highlight clear LineNr              " Current line number row will have same background color in relative mode
+    highlight clear LineNr              " Current line number row will have same
+                                        " background color in relative mode
 
     if has('cmdline_info')
         set ruler                       " Show the ruler
-        set showcmd                     " Show partial commands in status line and
+        set showcmd                     " Show partial commands
     endif
 
     set backspace=indent,eol,start      " Backspace for dummies
@@ -172,24 +173,25 @@ call plug#end()
     set ignorecase                      " Case insensitive search
     set smartcase                       " Case sensitive when uc present
     set wildmenu                        " Show list instead of just completing
-    set wildmode=list:longest,full      " Command <Tab> completion, list matches, then longest common part, then all.
+    set wildmode=list:longest,full      " Command <Tab> completion, list matches
+                                        ", then longest common part, then all.
     set whichwrap=b,s,h,l,<,>,[,]       " Backspace and cursor keys wrap too
-    set scrolljump=5                    " Lines to scroll when cursor leaves screen
-    set scrolloff=3                     " Minimum lines to keep above and below cursor
+    set scrolljump=5                    " Lines to scroll when cursor leaves
+    set scrolloff=3                     " Lines to keep above and below cursor
     set foldenable                      " Auto fold code
     set list
     set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
                                         " Highlight problematic whitespace
-" }
+"}
 
 " GUI Settings {
     if has('gui_running')
         set guioptions-=T               " Remove the toolbar
         set lines=40                    " 40 lines of text instead of 24
         if LINUX()
-            set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
+            set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11
         elseif OSX()
-            set guifont=Monaco:h14,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
+            set guifont=Monaco:h14,Menlo\ Regular:h11,Consolas\ Regular:h12
             colors Tomorrow-Night
             set guioptions=aAce
             set showtabline-=0
@@ -214,40 +216,41 @@ call plug#end()
         endif
     else
         if &term == 'xterm' || &term == 'screen'
-            set t_Co=256                " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+            set t_Co=256                " Enable 256 colors
         endif
     endif
     if !exists(":DiffOrig")
         command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
               \ | wincmd p | diffthis
     endif
-" }
+"}
 
 " Formatting {
     set nowrap                          " Do not wrap long lines
-    set autoindent                      " Indent at the same level of the previous line
+    set autoindent                      " Indent at the same level
     set shiftwidth=4                    " Use indents of 4 spaces
     set expandtab                       " Tabs are spaces, not tabs
     set tabstop=4                       " An indentation every four columns
     set softtabstop=4                   " Let backspace delete indent
-    set smarttab                        " Insert tabs on the start of a line according to
-    set nojoinspaces                    " Prevents inserting two spaces after punctuation on a join (J)
-    set splitright                      " Puts new vsplit windows to the right of the current
-    set splitbelow                      " Puts new split windows to the bottom of the current
+    set smarttab                        " Insert tabs on the start
+    set nojoinspaces                    " Prevents inserting two spaces
+    set splitright                      " Puts new vsplit windows to the right
+    set splitbelow                      " Puts new split windows to the bottom
     "set matchpairs+=<:>                " Match, to be used with %
-    set pastetoggle=<F12>               " pastetoggle (sane indentation on pastes)
+    set pastetoggle=<F12>               " pastetoggle
 
     autocmd BufNewFile,BufRead *.sop    set filetype=c
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-    autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+    autocmd FileType haskell,puppet,ruby,yml
+                \ setlocal expandtab shiftwidth=2 softtabstop=2
     " preceding line best in a plugin but here for now.
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
     " Workaround vim-commentary for Haskell
     autocmd FileType haskell setlocal commentstring=--\ %s
     " Workaround broken colour highlighting in Haskell
     autocmd FileType haskell,rust setlocal nospell
-" }
+"}
 
 " Key (re)Mappings {
     let mapleader   = ","
@@ -255,11 +258,9 @@ call plug#end()
 
     " remap vim 0
     nm 0 ^
-
     nm j gj
     nm k gk
     nm Y y$
-
 
     " c-j,k for buffer switch
     nm <c-j> :bn<cr>
@@ -350,7 +351,7 @@ call plug#end()
         command! -bang -nargs=* -complete=file Wq wq<bang> <args>
         command! -bang -nargs=* -complete=file WQ wq<bang> <args>
     endif
-" }
+"}
 
 " Plugins {
 
@@ -361,30 +362,31 @@ call plug#end()
         if isdirectory(expand("~/.vim/Plugged/matchit.zip"))
             let b:match_ignorecase = 1
         endif
-    " }
+    "}
 
     " Smooth-scroll {
         noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
         noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
         noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
         noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-    " }
+    "}
 
     " Ctags {
         set tags=./tags;/,~/.vimtags
 
-        " Make tags placed in .git/tags file available in all levels of a repository
-        let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+        " Make tags placed in .git/tags file available in all levels
+        let gitroot = substitute(system('git rev-parse --show-toplevel'),
+                    \ '[\n\r]', '', 'g')
         if gitroot != ''
             let &tags = &tags . ',' . gitroot . '/.git/tags'
         endif
-    " }
+    "}
 
     " AutoCloseTag {
         " Make it so AutoCloseTag works for xml and xhtml files as well
         au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
         nmap <Leader>ac <Plug>ToggleAutoCloseMappings
-    " }
+    "}
 
     " NerdTree {
         if isdirectory(expand("~/.vim/Plugged/nerdtree"))
@@ -393,7 +395,8 @@ call plug#end()
             nmap <leader>nt :NERDTreeFind<CR>
 
             let NERDTreeShowBookmarks=1
-            let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+            let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$',
+                        \ '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
             let NERDTreeChDirMode=0
             let NERDTreeQuitOnOpen=1
             let NERDTreeMouseMode=2
@@ -401,7 +404,7 @@ call plug#end()
             let NERDTreeKeepTreeInNewTab=1
             let g:nerdtree_tabs_open_on_gui_startup=0
         endif
-    " }
+    "}
 
     " Tabularize {
         if isdirectory(expand("~/.vim/Plugged/tabular"))
@@ -422,7 +425,7 @@ call plug#end()
             nmap <Leader>a<Bar> : Tabularize /<Bar><CR>
             vmap <Leader>a<Bar> : Tabularize /<Bar><CR>
         endif
-    " }
+    "}
 
     " Session List {
         set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
@@ -431,19 +434,20 @@ call plug#end()
             nmap <leader>ss :SessionSave<CR>
             nmap <leader>sc :SessionClose<CR>
         endif
-    " }
+    "}
 
     " Vimwiki {
     let g:vimwiki_camel_case = 0
     map <leader>a :VimwikiToggleListItem<CR>
     " diary map
-    map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>5o<ESC>ggJj^i<tab>
-    map <leader>wl :e D:\vimwiki\WorkLog.wiki<CR>
     if WINDOWS()
         let g:vimwiki_list = [{'path': 'D:\vimwiki',
                     \"syntax": "markdown"}]
+        map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
+                    \ 5o<ESC>ggJj^i<tab>
+        map <leader>wl :e D:\vimwiki\WorkLog.wiki<CR>
     endif
-    " }
+    "}
 
     " ctrlp {
         if isdirectory(expand("~/.vim/Plugged/ctrlp.vim/"))
@@ -472,7 +476,8 @@ call plug#end()
             endif
             let g:ctrlp_user_command = {
                 \ 'types': {
-                    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+                    \ 1: ['.git', 'cd %s && git ls-files .
+                    \    --cached --exclude-standard --others'],
                     \ 2: ['.hg', 'hg --cwd %s locate -I .'],
                 \ },
                 \ 'fallback': s:ctrlp_fallback
@@ -496,7 +501,7 @@ call plug#end()
 
     " Rainbow {
         if isdirectory(expand("~/.vim/Plugged/rainbow/"))
-            let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+            let g:rainbow_active = 1
             let g:rbpt_max = 16
             let g:rbpt_loadcmd_toggle = 0
             let g:rbpt_colorpairs = [
@@ -540,19 +545,13 @@ call plug#end()
             " If undotree is opened, it is likely one wants to interact with it.
             let g:undotree_SetFocusWhenToggle=1
         endif
-    " }
+    "}
 
     " indent_guides {
         if isdirectory(expand("~/.vim/Plugged/vim-indent-guides/"))
             let g:indent_guides_start_level = 2
             let g:indent_guides_guide_size = 1
             let g:indent_guides_enable_on_vim_startup = 1
-        endif
-    " }
-
-    " Rainbow {
-        if isdirectory(expand("~/.vim/Plugged/rainbow/"))
-            let g:rainbow_active = 1    " 0 if you want to enable it later via :RainbowToggle
         endif
     "}
 
@@ -564,7 +563,6 @@ call plug#end()
         "   let g:airline_powerline_fonts=1
         " If the previous symbols do not render for you then install a
         " powerline enabled font.
-
         " See `:echo g:airline_theme_map` for some more choices
         " Default in terminal vim is 'dark'
         if isdirectory(expand("~/.vim/Plugged/vim-airline-themes/"))
@@ -574,7 +572,7 @@ call plug#end()
                 " Use the default set of separators with a few customizations
             endif
         endif
-    " }
+    "}
 
     " fugitive  {
         if isdirectory(expand("~/.vim/Plugged/vim-fugitive/"))
@@ -584,20 +582,19 @@ call plug#end()
             nnoremap <silent> <leader>gl :Glog<CR>
             nnoremap <silent> <leader>gp :Git push<CR>
         endif
-    " }
+    "}
 
     " ultisnips {
-        " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+        " Trigger configuration.
         let g:UltiSnipsJumpForwardTrigger="<c-b>"
         let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
         " If you want :UltiSnipsEdit to split your window.
         let g:UltiSnipsEditSplit="vertical"
-    " }
-" }
+    "}
+"}
 
 " Functions {
-
     " Clean whitespace {
     function! DelTrailingWhitespace()
         " Preparation: save last search, and cursor position.
@@ -610,8 +607,9 @@ call plug#end()
         let @/=_s
         call cursor(l, c)
     endfunction
-    command! -bang -nargs=* DelTrailingWhitespace :call DelTrailingWhitespace(<bang> <args>)
-    " }
+    command! -bang -nargs=* DelTrailingWhitespace
+                \ :call DelTrailingWhitespace(<bang> <args>)
+    "}
 
     "quick format multi line data for sql {
     function! FormatSqlData()
@@ -623,7 +621,7 @@ call plug#end()
         silent! 1,$ y
     endfunction
     command! -bang -nargs=* FormatSqlData :call FormatSqlData(<bang> <args>)
-    " }
+    "}
 
     " highlight active windows {
     if exists('+colorcolumn')
@@ -632,11 +630,11 @@ call plug#end()
                 let l:range = ""
                 if i != winnr()
                     if &wrap
-                        " HACK: when wrapping lines is enabled, we use the maximum number
-                        " of columns getting highlighted. This might get calculated by
-                        " looking for the longest visible line and using a multiple of
-                        " winwidth().
-                        let l:width=256 " max
+                        " HACK: when wrapping lines is enabled, we use the
+                        " maximum number " of columns getting highlighted.
+                        " This might get calculated by " looking for the longest
+                        " visible line and using a multiple of winwidth().
+                        let l:width=256
                     else
                         let l:width=winwidth(i)
                     endif
@@ -652,7 +650,7 @@ call plug#end()
             au WinLeave * set nocursorline
         augroup END
     endif
-    " }
+    "}
 
     " Cycle through relativenumber + number, number (only), and no numbering.
     function! CycleNumbering()
@@ -661,7 +659,8 @@ call plug#end()
              \ '00': 'set relativenumber   | set number',
              \ '01': 'set norelativenumber | set number',
              \ '10': 'set norelativenumber | set nonumber',
-             \ '11': 'set norelativenumber | set number' }[&number . &relativenumber]
+             \ '11': 'set norelativenumber | set number' }
+             \ [&number . &relativenumber]
         else
             " No relative numbering, just toggle numbers on and off.
             set number!
@@ -698,7 +697,8 @@ call plug#end()
      " Must set font first so columns and lines are based on font size.
      let f = ScreenFilename()
      if has("gui_running") && g:screen_size_restore_pos && filereadable(f)
-       let vim_instance = (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
+       let vim_instance =
+                   \ (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
        for line in readfile(f)
          let sizepos = split(line)
          if len(sizepos) == 5 && sizepos[0] == vim_instance
@@ -713,10 +713,11 @@ call plug#end()
    function! ScreenSave()
      " Save window size and position.
      if has("gui_running") && g:screen_size_restore_pos
-         let vim_instance = (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
+         let vim_instance =
+                   \ (g:screen_size_by_vim_instance==1?(v:servername):'GVIM')
          let data = vim_instance . ' ' . &columns . ' ' . &lines . ' ' .
-                     \ (getwinposx()<0?0:getwinposx()) . ' ' .
-                     \ (getwinposy()<0?0:getwinposy())
+                   \ (getwinposx()<0?0:getwinposx()) . ' ' .
+                   \ (getwinposy()<0?0:getwinposy())
          let f = ScreenFilename()
          if filereadable(f)
              let lines = readfile(f)
@@ -754,4 +755,4 @@ call plug#end()
        endif
        call libcall(g:MyVimLib, 'EnableTopMost', g:VimTopMost)
    endfunction
-" }
+"}
