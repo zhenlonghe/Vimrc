@@ -3,18 +3,6 @@
 "    Author      : zhenlonghe@gmail.com
 "    License     : GPL v2.0
 "---------------------------------------------------------------------------
-" Put these lines at the very end of your vimrc file.
-
-" Load all plugins now.
-" Plugins need to be added to runtimepath before helptags can be generated.
-packloadall
-" Load all of the helptags now, after plugins have been loaded.
-" All messages and errors will be ignored.
-silent! helptags ALL
-
-let mapleader   = ","
-let g:mapleader = ","
-
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -28,7 +16,7 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'tomasr/molokai'
 Plug 'w0ng/vim-hybrid'
 Plug 'joshdick/onedark.vim'
-"}
+" }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -45,7 +33,6 @@ Plug 'vimwiki/vimwiki'
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
-"Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-fugitive'
@@ -58,9 +45,11 @@ Plug 'Raimondi/delimitMate'
 Plug 'kana/vim-repeat'
 Plug 'vimcn/vimcdoc'
 Plug 'Shougo/denite.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/fzf'
 Plug '~/autocmds'
+Plug 'terryma/vim-smooth-scroll'
 "Plug 'mhinz/vim-signify'
 "Plug 'chrisbra/changesplugin'
 "Plug 'vim-scripts/SQLComplete.vim'
@@ -151,10 +140,8 @@ call plug#end()
 " }
 
 " Vim UI {
-    if filereadable(expand("~/.vim/Plugged/gruvbox/colors/gruvbox.vim"))
-        set t_Co=256                    " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-        color Tomorrow-Night            " Load a colorscheme
-    endif
+    set t_Co=256                    " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+    color Tomorrow-Night            " Load a colorscheme
 
     set showmode                        " Display the current mode
     set cursorline                      " Highlight current line
@@ -189,18 +176,17 @@ call plug#end()
 " }
 
 " GUI Settings {
-    " GVIM- (here instead of .gvimrc)
     if has('gui_running')
         set guioptions-=T               " Remove the toolbar
         set lines=40                    " 40 lines of text instead of 24
-        if LINUX() && has("gui_running")
+        if LINUX()
             set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
-        elseif OSX() && has("gui_running")
+        elseif OSX()
             set guifont=Monaco:h14,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
             colors Tomorrow-Night
             set guioptions=aAce
             set showtabline-=0
-        elseif WINDOWS() && has("gui_running")
+        elseif WINDOWS()
             set go=
             color Tomorrow-Night
             set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
@@ -243,6 +229,7 @@ call plug#end()
     set splitbelow                      " Puts new split windows to the bottom of the current
     "set matchpairs+=<:>                " Match, to be used with %
     set pastetoggle=<F12>               " pastetoggle (sane indentation on pastes)
+
     autocmd BufNewFile,BufRead *.sop    set filetype=c
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
@@ -253,18 +240,15 @@ call plug#end()
     autocmd FileType haskell setlocal commentstring=--\ %s
     " Workaround broken colour highlighting in Haskell
     autocmd FileType haskell,rust setlocal nospell
-
 " }
 
 " Key (re)Mappings {
+    let mapleader   = ","
+    let g:mapleader = ","
 
     imap jj <ESC>
-
-    " Wrapped lines goes down/up to next row, rather than next line in file.
     noremap j gj
     noremap k gk
-
-    " Visual shifting (does not exit Visual mode)
     vnoremap < <gv
     vnoremap > >gv
 
@@ -284,6 +268,7 @@ call plug#end()
         command! -bang -nargs=* -complete=file WQ wq<bang> <args>
         command! -bang Wa wa<bang>
         command! -bang WA wa<bang>
+        command! -bang H   h<bang>
         command! -bang Q   q<bang>
         command! -bang QA qa<bang>
         command! -bang Qa qa<bang>
@@ -366,11 +351,11 @@ call plug#end()
     nmap <leader>sv :set mouse=v<cr>
     nmap <leader>sa :set mouse=a<cr>
 
-    nmap <leader>w  :w !sudo tee %<cr>
-    nmap <space>w  :w<cr>
-    nmap <silent> <leader>q  :bd!<cr>
-    nmap <silent> <space>q   :bd<cr>
-    nmap <silent> <space>c   :qa!<cr>
+    nmap <leader>w               :w !sudo tee %<cr>
+    nmap <space>w                :w<cr>
+    nmap <silent> <leader>q      :bd!<cr>
+    nmap <silent> <space><space> :bd<cr>
+    nmap <silent> <space>c       :qa!<cr>
 " }
 
 " Plugins {
@@ -382,6 +367,13 @@ call plug#end()
         if isdirectory(expand("~/.vim/Plugged/matchit.zip"))
             let b:match_ignorecase = 1
         endif
+    " }
+
+    " Smooth-scroll {
+        noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+        noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+        noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+        noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
     " }
 
     " Ctags {
@@ -399,7 +391,6 @@ call plug#end()
         au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
         nmap <Leader>ac <Plug>ToggleAutoCloseMappings
     " }
-
 
     " NerdTree {
         if isdirectory(expand("~/.vim/Plugged/nerdtree"))
@@ -567,16 +558,9 @@ call plug#end()
 
     " Rainbow {
         if isdirectory(expand("~/.vim/Plugged/rainbow/"))
-            let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+            let g:rainbow_active = 1    " 0 if you want to enable it later via :RainbowToggle
         endif
     "}
-
-    " Wildfire {
-    let g:wildfire_objects = {
-                \ "*" : ["i'", 'i"', "i)", "i]", "i}", "ip"],
-                \ "html,xml" : ["at"],
-                \ }
-    " }
 
     " vim-airline {
         " Set configuration options for the statusline plugin vim-airline.
@@ -597,6 +581,7 @@ call plug#end()
             endif
         endif
     " }
+
     " fugitive  {
         if isdirectory(expand("~/.vim/Plugged/vim-fugitive/"))
             nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -689,6 +674,7 @@ call plug#end()
         endif
     endfunction
     command! -bang -nargs=* CycleNumbering :call CycleNumbering(<bang> <args>)
+    noremap <space>tn :call CycleNumbering()<CR>
 
     " Allow to trigger background
     function! ToggleBG()
