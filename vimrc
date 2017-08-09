@@ -94,7 +94,6 @@ call plug#end()
     set mousehide                       " Hide the mouse cursor while typing
     set encoding=utf-8
     scriptencoding utf-8
-    set termencoding=cp936
     set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,gbk,euc-kr,utf-bom
     if has('clipboard')
         if has('unnamedplus')  " When possible use + register for copy-paste

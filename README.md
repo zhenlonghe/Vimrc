@@ -1,9 +1,7 @@
 This zhenlong's Vimrc.
 =========================
-
-My personal Vim configurations and some plugins which I used in my daily job.
-I use vim-plug to manage all my plugins, and this config compatible with
-Windows, Linux and OS X.
+My personal Vim configurations and plugins which I use in my daily job,
+and it compatibles with Windows, Linux and OS X. Vim-plug helps me manage all my plugins.
 
 ## Usage
 
@@ -47,5 +45,5 @@ Windows, Linux and OS X.
 
 ## Contact
 
-Enjoy it, and if there's any question or comment, feel free to let me know.
+Enjoy it, and if you have any question or comment, feel free to contact me know.
 Happy Coding :)
