@@ -37,7 +37,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-"Plug 'chrisbra/changesplugin'
 Plug 'ervandew/supertab'
 Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'vim-scripts/taglist.vim'
@@ -50,7 +49,6 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/fzf'
 Plug '~/autocmds'
-Plug 'terryma/vim-smooth-scroll'
 " Colorsheme {
 Plug 'c9s/colorselector.vim'
 Plug 'altercation/vim-colors-solarized'
@@ -364,13 +362,6 @@ call plug#end()
         endif
     "}
 
-    " Smooth-scroll {
-        noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-        noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-        noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-        noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-    "}
-
     " Ctags {
         set tags=./tags;/,~/.vimtags
 
@@ -659,8 +650,7 @@ call plug#end()
              \ '00': 'set relativenumber   | set number',
              \ '01': 'set norelativenumber | set number',
              \ '10': 'set norelativenumber | set nonumber',
-             \ '11': 'set norelativenumber | set number' }
-             \ [&number . &relativenumber]
+             \ '11': 'set norelativenumber | set number' }[&number . &relativenumber]
         else
             " No relative numbering, just toggle numbers on and off.
             set number!
