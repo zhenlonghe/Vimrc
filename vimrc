@@ -1,22 +1,22 @@
 "---------------------------------------------------------------------------
-"    Description : zhenlong's vimrc
-"    Author      : zhenlonghe@gmail.com
-"    License     : GPL v2.0
+"    Description  : zhenlong's vimrc
+"    Author       : zhenlonghe@gmail.com
+"    License      : GPL v2.0
+"    Organization :
+"                   Environment
+"                   General
+"                   Vim UI
+"                   GUI Settings
+"                   Formatting
+"                   Key (re)Mappings
+"                   Plugins
+"                   Functions
 "---------------------------------------------------------------------------
+
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'enricobacis/vim-airline-clock'
-" Colorsheme {
-Plug 'c9s/colorselector.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'morhetz/gruvbox'
-Plug 'nanotech/jellybeans.vim'
-Plug 'tomasr/molokai'
-Plug 'w0ng/vim-hybrid'
-Plug 'joshdick/onedark.vim'
-" }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -37,6 +37,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+"Plug 'chrisbra/changesplugin'
 Plug 'ervandew/supertab'
 Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'vim-scripts/taglist.vim'
@@ -50,10 +51,16 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/fzf'
 Plug '~/autocmds'
 Plug 'terryma/vim-smooth-scroll'
-"Plug 'mhinz/vim-signify'
-"Plug 'chrisbra/changesplugin'
-"Plug 'vim-scripts/SQLComplete.vim'
-"Plug 'roxma/nvim-completion-manager'
+" Colorsheme {
+Plug 'c9s/colorselector.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'morhetz/gruvbox'
+Plug 'nanotech/jellybeans.vim'
+Plug 'tomasr/molokai'
+Plug 'w0ng/vim-hybrid'
+Plug 'joshdick/onedark.vim'
+" }
 call plug#end()
 
 " Environment {
@@ -189,7 +196,7 @@ call plug#end()
         elseif WINDOWS()
             set go=
             color Tomorrow-Night
-            set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+            set guifont=InputMono:h9,Menlo:h10,Consolas:h10,Courier_New:h10
             "set guifontwide=YouYuan:h10:cGB2312
             let g:MyVimLib   = 'gvimfullscreen.dll'
             let g:VimAlpha   = 245
@@ -246,116 +253,103 @@ call plug#end()
     let mapleader   = ","
     let g:mapleader = ","
 
-    imap jj <ESC>
-    noremap j gj
-    noremap k gk
-    vnoremap < <gv
-    vnoremap > >gv
+    " remap vim 0
+    nm 0 ^
 
-    " Yank from the cursor to the end of the line, to be consistent with C and D.
-    nnoremap Y y$
+    nm j gj
+    nm k gk
+    nm Y y$
 
-    nmap <c-enter>   :call ToggleFullScreen()<cr>
-    nmap <s-r> :call SwitchVimTopMostMode()<cr>
-    nmap <s-w> :call SetAlpha(-10)<cr>
-    nmap <s-e> :call SetAlpha(10)<cr>
+
+    " c-j,k for buffer switch
+    nm <c-j> :bn<cr>
+    nm <c-k> :bp<cr>
+    nm <tab> <c-w>w
+
+    nm <c-enter>   :call ToggleFullScreen()<cr>
+    nm <s-r> :call SwitchVimTopMostMode()<cr>
+    nm <s-w> :call SetAlpha(-10)<cr>
+    nm <s-e> :call SetAlpha(10)<cr>
+
+
+    " Code folding options
+    nm <leader>f0 :set foldlevel=0<CR>
+    nm <leader>f1 :set foldlevel=1<CR>
+    nm <leader>f2 :set foldlevel=2<CR>
+    nm <leader>f3 :set foldlevel=3<CR>
+    nm <leader>f4 :set foldlevel=4<CR>
+    nm <leader>f5 :set foldlevel=5<CR>
+    nm <leader>f6 :set foldlevel=6<CR>
+    nm <leader>f7 :set foldlevel=7<CR>
+    nm <leader>f8 :set foldlevel=8<CR>
+    nm <leader>f9 :set foldlevel=9<CR>
+
+    nm <silent> <leader>/ :nohlsearch<CR>
+
+    " time & date map
+    nm <leader>da "=strftime("%y%m%d")<cr>p"
+    nm <leader>ti "=strftime("%h:%m:%s")<cr>p"
+
+    " quick open vimrc in a new tab
+    nm <leader>v  :e $MYVIMRC<cr>
+    nm <leader>s  :source $MYVIMRC<cr>
+    nm <leader>0  :e ~/.vim/README.md<cr>
+
+    " mouse
+    nm <leader>sv :set mouse=v<cr>
+    nm <leader>sa :set mouse=a<cr>
+
+    nm <leader>w      :w !sudo tee %<cr>
+    nm <leader>q      :bd!<cr>
+    nm <space>w       :w<cr>
+    nm <space>c       :qa!<cr>
+    nm <space><space> :bd<cr>
+
+    " Some helpers to edit mode
+    cm %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+    nm <leader>ew :e %%
+    nm <leader>es :sp %%
+    nm <leader>ev :vsp %%
+    nm <leader>et :tabe %%
+
+    " emacs key bind
+    im jj    <ESC>
+    im <c-a> <HOME>
+    im <c-e> <END>
+    im <C-f> <Right>
+    im <C-b> <Left>
+    im <M-f> <S-Right>
+    im <M-b> <S-Left>
+    im <M-n> <Down>
+    im <M-p> <Up>
+
+    " Shortcuts
+    " Change Working Directory to that of the current file
+    cm cwd lcd %:p:h
+    cm cd. lcd %:p:h
+
+    " For when you forget to sudo.. Really Write the file.
+    cm w!! w !sudo tee % >/dev/null
+
+    " Allow using the repeat operator with a visual selection (!)
+    vm . :normal .<CR>
+    vm < <gv
+    vm > >gv
 
     " Stupid shift key fixes
     if has("user_commands")
+        command! -bang Wa     wa<bang>
+        command! -bang WA     wa<bang>
+        command! -bang H       h<bang>
+        command! -bang Q       q<bang>
+        command! -bang QA     qa<bang>
+        command! -bang Qa     qa<bang>
+        command! -bang Tabe tabe<bang>
         command! -bang -nargs=* -complete=file E   e<bang> <args>
         command! -bang -nargs=* -complete=file W   w<bang> <args>
         command! -bang -nargs=* -complete=file Wq wq<bang> <args>
         command! -bang -nargs=* -complete=file WQ wq<bang> <args>
-        command! -bang Wa wa<bang>
-        command! -bang WA wa<bang>
-        command! -bang H   h<bang>
-        command! -bang Q   q<bang>
-        command! -bang QA qa<bang>
-        command! -bang Qa qa<bang>
-        command! -bang Tabe tabe<bang>
     endif
-
-    " Code folding options
-    nmap <leader>f0 :set foldlevel=0<CR>
-    nmap <leader>f1 :set foldlevel=1<CR>
-    nmap <leader>f2 :set foldlevel=2<CR>
-    nmap <leader>f3 :set foldlevel=3<CR>
-    nmap <leader>f4 :set foldlevel=4<CR>
-    nmap <leader>f5 :set foldlevel=5<CR>
-    nmap <leader>f6 :set foldlevel=6<CR>
-    nmap <leader>f7 :set foldlevel=7<CR>
-    nmap <leader>f8 :set foldlevel=8<CR>
-    nmap <leader>f9 :set foldlevel=9<CR>
-
-    nmap <silent> <leader>/ :nohlsearch<CR>
-
-    " Find merge conflict markers
-    map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
-
-    " Shortcuts
-    " Change Working Directory to that of the current file
-    cmap cwd lcd %:p:h
-    cmap cd. lcd %:p:h
-
-
-    " Allow using the repeat operator with a visual selection (!)
-    " http://stackoverflow.com/a/8064607/127816
-    vnoremap . :normal .<CR>
-
-    " For when you forget to sudo.. Really Write the file.
-    cmap w!! w !sudo tee % >/dev/null
-
-    " Some helpers to edit mode
-    " http://vimcasts.org/e/14
-    cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-    map <leader>ew :e %%
-    map <leader>es :sp %%
-    map <leader>ev :vsp %%
-    map <leader>et :tabe %%
-
-    " Map <Leader>ff to display all lines with keyword under cursor
-    " and ask which one to jump to
-    nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-
-    " c-j,k for buffer switch
-    nmap <c-j> :bn<cr>
-    nmap <c-k> :bp<cr>
-    nmap <tab> <c-w>w
-
-    " emacs key bind
-    imap <c-a> <HOME>
-    imap <c-e> <END>
-    imap <C-f> <Right>
-    imap <C-b> <Left>
-    imap <M-f> <S-Right>
-    imap <M-b> <S-Left>
-    imap <M-n> <Down>
-    imap <M-p> <Up>
-
-    " remap vim 0
-    map 0 ^
-
-    " return current opened file's dirctory
-    cnoremap %% <c-r>=expand('%:h').'/'<cr>
-
-    " time & date map
-    nmap <leader>da "=strftime("%y%m%d")<cr>p"
-    nmap <leader>ti "=strftime("%h:%m:%s")<cr>p"
-
-    " quick open vimrc in a new tab
-    nmap <leader>v  :e $MYVIMRC<cr>
-    nmap <leader>s  :source $MYVIMRC<cr>
-    map  <leader>0  :topleft 100 :split $HOME/vimfiles/README.md<cr>
-
-    " mouse
-    nmap <leader>sv :set mouse=v<cr>
-    nmap <leader>sa :set mouse=a<cr>
-
-    nmap <leader>w               :w !sudo tee %<cr>
-    nmap <space>w                :w<cr>
-    nmap <silent> <leader>q      :bd!<cr>
-    nmap <silent> <space><space> :bd<cr>
-    nmap <silent> <space>c       :qa!<cr>
 " }
 
 " Plugins {
