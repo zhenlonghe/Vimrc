@@ -1,8 +1,5 @@
-.netrwhist
-.un\~
 .DS_Store
 .cache/
 doc/
 plugged/
 autoload/
-ycp/
