@@ -134,6 +134,7 @@ call plug#end()
     " Setting up the directories {
         set backup
         set backupdir=~/.cache/backup
+        set directory=~/.cache/backup
         if has('persistent_undo')
             set undofile                " So is persistent undo ...
             set undodir=~/.cache/undo/
@@ -264,7 +265,7 @@ call plug#end()
     nm <c-k> :bp<cr>
     nm <tab> <c-w>w
 
-    nm <c-enter>   :call ToggleFullScreen()<cr>
+    nm <leader>ff  :call ToggleFullScreen()<cr>
     nm <s-r> :call SwitchVimTopMostMode()<cr>
     nm <s-w> :call SetAlpha(-10)<cr>
     nm <s-e> :call SetAlpha(10)<cr>
@@ -427,16 +428,18 @@ call plug#end()
     "}
 
     " Vimwiki {
-    let g:vimwiki_camel_case = 0
-    map <leader>a :VimwikiToggleListItem<CR>
-    " diary map
-    if WINDOWS()
-        let g:vimwiki_list = [{'path': 'D:\vimwiki',
-                    \"syntax": "markdown"}]
-        map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
-                    \ 5o<ESC>ggJj^i<tab>
-        map <leader>wl :e D:\vimwiki\WorkLog.wiki<CR>
-    endif
+        if isdirectory(expand("~/.vim/Plugged/vimwiki"))
+            let g:vimwiki_camel_case = 0
+            map <leader>a :VimwikiToggleListItem<CR>
+            " diary map
+            if WINDOWS()
+                let g:vimwiki_list = [{'path': 'D:\vimwiki',
+                            \"syntax": "markdown"}]
+                map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
+                            \ 5o<ESC>ggJj^i<tab>
+                map <leader>wl :e D:\vimwiki\WorkLog.wiki<CR>
+            endif
+        endif
     "}
 
     " ctrlp {
@@ -575,12 +578,14 @@ call plug#end()
     "}
 
     " ultisnips {
-        " Trigger configuration.
-        let g:UltiSnipsJumpForwardTrigger="<c-b>"
-        let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+        if isdirectory(expand("~/.vim/Plugged/ultisnips/"))
+            " Trigger configuration.
+            let g:UltiSnipsJumpForwardTrigger  = "<c-b>"
+            let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
-        " If you want :UltiSnipsEdit to split your window.
-        let g:UltiSnipsEditSplit="vertical"
+            " If you want :UltiSnipsEdit to split your window.
+            let g:UltiSnipsEditSplit="vertical"
+        endif
     "}
 "}
 
@@ -724,6 +729,7 @@ call plug#end()
        call SwitchVimTopMostMode()
        call libcall(g:MyVimLib, 'ToggleFullScreen', 1)
    endfunction
+   command! -bang -nargs=* ToggleFullScreen :call ToggleFullScreen(<bang> <args>)
 
    function! SetAlpha(alpha)
        let g:VimAlpha = g:VimAlpha + a:alpha
