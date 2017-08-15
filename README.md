@@ -47,3 +47,7 @@ and it compatibles with Windows, Linux and OS X. Vim-plug helps me manage all my
 
 Enjoy it, and if you have any question or comment, feel free to contact me.
 Happy Coding :)
+
+Buy me a ☕ coffee if you like my work 😀
+
+<img width="250" src="buy-me-a-coffee.jpg" />
