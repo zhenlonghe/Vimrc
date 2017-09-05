@@ -258,7 +258,7 @@ call plug#end()
 
     nm <leader>c      :bd<cr>
     nm <leader>q      :bd!<cr>
-    nm <leader>x      :qa!<cr>
+    nm <m-q>          :qa!<cr>
     nm <leader>w      :w !sudo tee %<cr>
     nm <leader>ft     :set ft=
     nm <silent> <leader>n :ene<CR>
