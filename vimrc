@@ -131,10 +131,11 @@ call plug#end()
         endif
     "}
 
-    " Setting up the directories {
+    " Backups {
         set backup
         set backupdir=~/.cache/backup
         set directory=~/.cache/backup
+        set writebackup
         let g:netrw_home='~/.cache/'
         if has('persistent_undo')
             set undofile                " So is persistent undo ...
@@ -198,7 +199,7 @@ call plug#end()
         elseif WINDOWS()
             set go=
             color Tomorrow-Night
-            set guifont=InputMono:h9,Menlo:h10,Consolas:h10,Courier_New:h10
+            set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
             "set guifontwide=YouYuan:h10:cGB2312
             let g:MyVimLib   = 'gvimfullscreen.dll'
             let g:VimAlpha   = 245
@@ -258,7 +259,7 @@ call plug#end()
 
     nm <leader>c      :bd<cr>
     nm <leader>q      :bd!<cr>
-    nm <m-q>          :qa!<cr>
+    nm <leader>x      :qa!<cr>
     nm <leader>w      :w !sudo tee %<cr>
     nm <leader>ft     :set ft=
     nm <silent> <leader>n :ene<CR>
@@ -564,6 +565,7 @@ call plug#end()
         if isdirectory(expand("~/.vim/Plugged/vim-airline-themes/"))
             let g:airline#extensions#tabline#show_buffers = 1
             let g:airline#extensions#tabline#tab_nr_type  = 1
+            autocmd BufNewFile,BufRead *.sop let g:airline#extensions#whitespace#checks = []
             if !exists('g:airline_powerline_fonts')
                 " Use the default set of separators with a few customizations
             endif
