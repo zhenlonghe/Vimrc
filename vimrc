@@ -198,6 +198,7 @@ call plug#end()
             set showtabline-=0
         elseif WINDOWS()
             set go=
+            set noimdisable
             color Tomorrow-Night
             set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
             "set guifontwide=YouYuan:h10:cGB2312
