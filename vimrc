@@ -92,6 +92,7 @@ call plug#end()
     filetype plugin indent on           " Automatically detect file types.
     set mouse=a                         " Automatically enable mouse usage
     set mousehide                       " Hide the mouse cursor while typing
+    set noimdisable
     set encoding=utf-8
     scriptencoding utf-8
     set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,gbk,euc-kr,utf-bom
@@ -198,7 +199,9 @@ call plug#end()
             set showtabline-=0
         elseif WINDOWS()
             set go=
-            set noimdisable
+            let $desk="c:\\Users\\Leon\\Desktop"
+            exec 'cd ' . fnameescape('C:\Users\Leon\Desktop')
+            set autochdir
             color Tomorrow-Night
             set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
             "set guifontwide=YouYuan:h10:cGB2312
@@ -214,7 +217,7 @@ call plug#end()
             endif
             autocmd VimEnter * if g:screen_size_restore_pos == 1 | call ScreenRestore() | endif
             autocmd VimLeavePre * if g:screen_size_restore_pos == 1 | call ScreenSave() | endif
-            autocmd GUIEnter * call libcallnr(g:MyVimLib, 'SetAlpha', g:VimAlpha)
+            "autocmd GUIEnter * call libcallnr(g:MyVimLib, 'SetAlpha', g:VimAlpha)
         endif
     else
         if &term == 'xterm' || &term == 'screen'
@@ -241,6 +244,7 @@ call plug#end()
     "set matchpairs+=<:>                " Match, to be used with %
     set pastetoggle=<F12>               " pastetoggle
 
+    " sop is c
     autocmd BufNewFile,BufRead *.sop    set filetype=c
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
@@ -260,7 +264,7 @@ call plug#end()
 
     nm <leader>c      :bd<cr>
     nm <leader>q      :bd!<cr>
-    nm <leader>x      :qa!<cr>
+    nm <leader>xx     :qa!<cr>
     nm <leader>w      :w !sudo tee %<cr>
     nm <leader>ft     :set ft=
     nm <silent> <leader>n :ene<CR>
@@ -268,6 +272,7 @@ call plug#end()
     " remap vim 0
     nm 0 ^
     nm j gj
+
     nm k gk
     nm Y y$
 
@@ -610,6 +615,14 @@ call plug#end()
     endfunction
     command! -bang -nargs=* DelTrailingWhitespace
                 \ :call DelTrailingWhitespace(<bang> <args>)
+    "}
+
+    " Clean WhiteLines {
+    function! DelWhiteLines()
+        %g/^$/d
+    endfunction
+    command! -bang -nargs=* DelWhiteLines
+                \ :call DelWhiteLines(<bang> <args>)
     "}
 
     "quick format multi line data for sql {
