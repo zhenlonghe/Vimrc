@@ -199,7 +199,9 @@ call plug#end()
             set showtabline-=0
         elseif WINDOWS()
             set go=
-            let $desk="c:\\Users\\Leon\\Desktop"
+            set shellxescape-=\>
+            set shellxescape-=\&
+            let $desk=$USERPROFILE"Desktop"
             exec 'cd ' . fnameescape('C:\Users\Leon\Desktop')
             set autochdir
             color Tomorrow-Night
