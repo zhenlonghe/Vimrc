@@ -58,6 +58,7 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'tomasr/molokai'
 Plug 'w0ng/vim-hybrid'
 Plug 'joshdick/onedark.vim'
+Plug 'ajh17/Spacegray.vim'
 "}
 call plug#end()
 
@@ -283,11 +284,12 @@ call plug#end()
     nm <c-k> :bp<cr>
     nm <tab> <c-w>w
 
-    nm <leader>f  :call ToggleFullScreen()<cr>
-    nm <s-r> :call SwitchVimTopMostMode()<cr>
-    nm <s-w> :call SetAlpha(-10)<cr>
-    nm <s-e> :call SetAlpha(10)<cr>
-
+    if WINDOWS()
+        nm <leader>f  :call ToggleFullScreen()<cr>
+        nm <s-r> :call SwitchVimTopMostMode()<cr>
+        nm <s-w> :call SetAlpha(-10)<cr>
+        nm <s-e> :call SetAlpha(10)<cr>
+    endif
 
     " Code folding options
     nm <leader>f0 :set foldlevel=0<CR>
@@ -672,10 +674,10 @@ call plug#end()
     function! CycleNumbering()
         if exists('+relativenumber')
             execute {
-             \ '00': 'set relativenumber   | set number',
-             \ '01': 'set norelativenumber | set number',
-             \ '10': 'set norelativenumber | set nonumber',
-             \ '11': 'set norelativenumber | set number' }[&number . &relativenumber]
+             \ '00': 'set norelativenumber   | set number',
+             \ '01': 'set norelativenumber   | set number',
+             \ '10': 'set relativenumber     | set number',
+             \ '11': 'set norelativenumber   | set nonumber' }[&number . &relativenumber]
         else
             " No relative numbering, just toggle numbers on and off.
             set number!
