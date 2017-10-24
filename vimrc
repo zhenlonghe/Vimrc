@@ -442,14 +442,17 @@ call plug#end()
         if isdirectory(expand("~/.vim/Plugged/vimwiki"))
             let g:vimwiki_camel_case = 0
             map <leader>a :VimwikiToggleListItem<CR>
-            " diary map
             if WINDOWS()
                 let g:vimwiki_list = [{'path': 'D:\Dropbox\doc\vimwiki',
                             \"syntax": "markdown"}]
+            elseif OSX()
+                let g:vimwiki_list = [{'path': '~/Dropbox/doc/vimwiki',
+                            \"syntax": "markdown"}]
+            endif
+            " diary map
                 map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
                             \ 5o<ESC>ggJj^i<tab>
                 map <leader>wl :e D:\vimwiki\WorkLog.wiki<CR>
-            endif
         endif
     "}
 
