@@ -16,7 +16,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'enricobacis/vim-airline-clock'
+"Plug 'enricobacis/vim-airline-clock'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -47,7 +47,6 @@ Plug 'vimcn/vimcdoc'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'junegunn/limelight.vim'
-Plug 'junegunn/fzf'
 Plug '~/autocmds'
 " Colorsheme {
 Plug 'c9s/colorselector.vim'
@@ -200,8 +199,6 @@ call plug#end()
             set showtabline-=0
         elseif WINDOWS()
             set go=
-            set shellxescape-=\>
-            set shellxescape-=\&
             let $desk=$USERPROFILE"Desktop"
             exec 'cd ' . fnameescape('C:\Users\Leon\Desktop')
             set autochdir
@@ -773,4 +770,46 @@ call plug#end()
        endif
        call libcall(g:MyVimLib, 'EnableTopMost', g:VimTopMost)
    endfunction
+
+   " toggle between working mode and presentation mode
+   " borrowed from skalnik(https://github.com/skalnik)
+   "
+   " font size change only work for GUI-version Vim
+
+   function! PresentationModeOn()
+       colorscheme Tomorrow
+       if has("gui_macvim")
+           set guifont=Monaco:h25           " for Mac
+       elseif has("gui_win32")
+           set guifont=InputMono:h14,Menlo:h10,Consolas:h10,Courier_New:h10
+       elseif has("gui_gtk")
+           set guifont=Monospace\ 22        " for ubuntu
+       end
+   endfunction
+
+   function! PresentationModeOff()
+       colorscheme Tomorrow-Night
+       if has('gui_macvim')
+           set guifont=Monaco:h17           " for Mac
+       elseif has("gui_win32")
+           set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+       elseif has("gui_gtk")
+           set guifont=Monospace\ 14        " for ubuntu
+       end
+   endfunction
+
+   function! TogglePresentationMode()
+       if !exists('w:present')
+           let w:present=0
+       endif
+
+       if w:present==0
+           call PresentationModeOn()
+           let w:present=1
+       else
+           call PresentationModeOff()
+           let w:present=0
+       endif
+   endfunction
+   map <leader>z :call TogglePresentationMode()<CR>
 "}
