@@ -448,7 +448,7 @@ call plug#end()
                             \"syntax": "markdown"}]
                 map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
                             \ 5o<ESC>ggJj^i<tab>
-                map <leader>wl :e D:\vimwiki\WorkLog.wiki<CR>
+                map <leader>wl :e D:\Dropbox\doc\vimwiki\WorkLog.wiki<CR>
             endif
         endif
     "}
