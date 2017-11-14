@@ -16,11 +16,9 @@
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'enricobacis/vim-airline-clock'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
+Plug 'Yggdroot/LeaderF'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/matchit.zip'
@@ -43,7 +41,7 @@ Plug 'vim-scripts/taglist.vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Raimondi/delimitMate'
 Plug 'kana/vim-repeat'
-Plug 'vimcn/vimcdoc'
+Plug 'yianwillis/vimcdoc'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'junegunn/limelight.vim'
@@ -109,7 +107,6 @@ call plug#end()
                                         " Better Unix / Windows compatibility
     set hidden                          " Allow buffer switching without saving
     set ttyfast                         " send more chars while redrawing
-    set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
     set iskeyword-=-                    " '-' is an end of word designator
     set history=1000                    " Store a ton of history (default is 20)
@@ -199,9 +196,8 @@ call plug#end()
             set showtabline-=0
         elseif WINDOWS()
             set go=
-            let $desk=$USERPROFILE"Desktop"
-            exec 'cd ' . fnameescape('C:\Users\Leon\Desktop')
-            set autochdir
+            exec 'cd ' . fnameescape('D:\Dropbox')
+            "set autochdir
             color Tomorrow-Night
             set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
             "set guifontwide=YouYuan:h10:cGB2312
@@ -246,6 +242,7 @@ call plug#end()
 
     " sop is c
     autocmd BufNewFile,BufRead *.sop    set filetype=c
+    autocmd BufNewFile,BufRead *.sop let g:airline#extensions#whitespace#checks = []
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd FileType haskell,puppet,ruby,yml
@@ -262,12 +259,11 @@ call plug#end()
     let mapleader   = " "
     let g:mapleader = " "
 
+    nm <silent> <leader>n :ene<CR>
     nm <leader>c      :bd<cr>
     nm <leader>q      :bd!<cr>
     nm <leader>xx     :qa!<cr>
-    nm <leader>w      :w !sudo tee %<cr>
-    nm <leader>ft     :set ft=
-    nm <silent> <leader>n :ene<CR>
+    nm <leader>t      :set ft=
 
     " remap vim 0
     nm 0 ^
@@ -282,10 +278,10 @@ call plug#end()
     nm <tab> <c-w>w
 
     if WINDOWS()
-        nm <leader>f  :call ToggleFullScreen()<cr>
-        nm <s-r> :call SwitchVimTopMostMode()<cr>
-        nm <s-w> :call SetAlpha(-10)<cr>
-        nm <s-e> :call SetAlpha(10)<cr>
+        nm <c-CR> :call ToggleFullScreen()<cr>
+        nm <a-f>  :call SwitchVimTopMostMode()<cr>
+        nm <a-r>  :call SetAlpha(-10)<cr>
+        nm <a-e>  :call SetAlpha(10)<cr>
     endif
 
     " Code folding options
@@ -365,9 +361,6 @@ call plug#end()
 " Plugins {
 
     " Misc {
-        if isdirectory(expand("~/.vim/Plugged/nerdtree"))
-            let g:NERDShutUp=1
-        endif
         if isdirectory(expand("~/.vim/Plugged/matchit.zip"))
             let b:match_ignorecase = 1
         endif
@@ -392,9 +385,9 @@ call plug#end()
 
     " NerdTree {
         if isdirectory(expand("~/.vim/Plugged/nerdtree"))
-            map <C-e> <plug>NERDTreeTabsToggle<CR>
+            let g:NERDShutUp=1
             map <leader>e :NERDTreeFind<CR>
-            nmap <leader>nt :NERDTreeFind<CR>
+            nmap <leader>nt :NERDTreeToggle<CR>
 
             let NERDTreeShowBookmarks=1
             let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$',
@@ -443,7 +436,7 @@ call plug#end()
             let g:vimwiki_camel_case = 0
             map <leader>a :VimwikiToggleListItem<CR>
             " diary map
-                map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
+            autocmd BufNewFile,BufRead *.wiki map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
                             \ 5o<ESC>ggJj^i<tab>
             if WINDOWS()
                 let g:vimwiki_list = [{'path': 'D:\Dropbox\doc\vimwiki',
@@ -575,7 +568,6 @@ call plug#end()
         if isdirectory(expand("~/.vim/Plugged/vim-airline-themes/"))
             let g:airline#extensions#tabline#show_buffers = 1
             let g:airline#extensions#tabline#tab_nr_type  = 1
-            autocmd BufNewFile,BufRead *.sop let g:airline#extensions#whitespace#checks = []
             if !exists('g:airline_powerline_fonts')
                 " Use the default set of separators with a few customizations
             endif
