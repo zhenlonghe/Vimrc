@@ -1,61 +1,52 @@
-"
+"    ===================================
 "    Description  : zhenlong's vimrc
 "    Author       : zhenlonghe@gmail.com
 "    License      : GPL v2.0
-"    Organization :
-"                   Environment
-"                   General
-"                   Vim UI
-"                   GUI Settings
-"                   Formatting
-"                   Key (re)Mappings
-"                   Plugins
-"                   Functions
-"------------------------------------------------------------------------------
+"    ===================================
 
 call plug#begin('~/.vim/plugged')
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'sjl/gundo.vim'
-Plug 'Yggdroot/LeaderF'
-Plug 'majutsushi/tagbar'
-Plug 'godlygeek/tabular'
-Plug 'vim-scripts/matchit.zip'
-Plug 'pelodelfuego/vim-swoop'
-Plug 'vim-scripts/SearchComplete'
-Plug 'gaving/vim-sqlcase'
-Plug 'itchyny/calendar.vim'
-Plug 'easymotion/vim-easymotion'
-Plug 'vimwiki/vimwiki'
-Plug 'luochen1990/rainbow'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-ragtag'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'ervandew/supertab'
-Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'vim-scripts/taglist.vim'
-Plug 'michaeljsmith/vim-indent-object'
 Plug 'Raimondi/delimitMate'
-Plug 'kana/vim-repeat'
-Plug 'yianwillis/vimcdoc'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Yggdroot/LeaderF'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'easymotion/vim-easymotion'
+Plug 'ervandew/supertab'
+Plug 'gaving/vim-sqlcase'
+Plug 'godlygeek/tabular'
+Plug 'itchyny/calendar.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'kana/vim-repeat'
+Plug 'luochen1990/rainbow'
+Plug 'majutsushi/tagbar'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'pelodelfuego/vim-swoop'
+Plug 'plasticboy/vim-markdown'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'sjl/gundo.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/SearchComplete'
+Plug 'vim-scripts/matchit.zip'
+Plug 'vimwiki/vimwiki'
+Plug 'yianwillis/vimcdoc'
 Plug '~/autocmds'
 " Colorsheme {
-Plug 'c9s/colorselector.vim'
+Plug 'gerardbm/vim-atomic'
 Plug 'altercation/vim-colors-solarized'
+Plug 'thenewvu/vim-colors-sketching'
+Plug 'antlypls/vim-colors-codeschool'
 Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'morhetz/gruvbox'
-Plug 'nanotech/jellybeans.vim'
-Plug 'tomasr/molokai'
-Plug 'w0ng/vim-hybrid'
+Plug 'nightsense/seagrey'
 Plug 'joshdick/onedark.vim'
-Plug 'ajh17/Spacegray.vim'
+Plug 'morhetz/gruvbox'
+Plug 'w0ng/vim-hybrid'
 "}
 call plug#end()
 
@@ -85,7 +76,6 @@ call plug#end()
 "}
 
 " General {
-    set background=dark                 " Assume a dark background
     syntax on                           " Syntax highlighting
     filetype plugin indent on           " Automatically detect file types.
     set mouse=a                         " Automatically enable mouse usage
@@ -95,9 +85,9 @@ call plug#end()
     scriptencoding utf-8
     set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,gbk,euc-kr,utf-bom
     if has('clipboard')
-        if has('unnamedplus')  " When possible use + register for copy-paste
+        if has('unnamedplus')           " When possible use + register for copy-paste
             set clipboard=unnamed,unnamedplus
-        else         " On mac and Windows, use * register for copy-paste
+        else                            " On mac and Windows, use * register for copy-paste
             set clipboard=unnamed
         endif
     endif
@@ -130,6 +120,7 @@ call plug#end()
     "}
 
     " Backups {
+        "set autochdir
         set backup
         set backupdir=~/.cache/backup
         set directory=~/.cache/backup
@@ -146,7 +137,8 @@ call plug#end()
 
 " Vim UI {
     set t_Co=256                        " Enable 256 colors
-    color Tomorrow-Night                " Load a colorscheme
+    color hybrid                        " Load a colorscheme
+    set background=dark                 " Assume a dark background
 
     set showmode                        " Display the current mode
     set cursorline                      " Highlight current line
@@ -177,10 +169,10 @@ call plug#end()
     set scrolljump=5                    " Lines to scroll when cursor leaves
     set scrolloff=3                     " Lines to keep above and below cursor
     set foldenable                      " Auto fold code
+
+    " Highlight problematic whitespace
     set list
-    "set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
-    set listchars=tab:\ \ ,trail:•,extends:#,nbsp:.
-                                        " Highlight problematic whitespace
+    set listchars=tab:\ \ ,trail:·,extends:#,nbsp:.
 "}
 
 " GUI Settings {
@@ -196,11 +188,10 @@ call plug#end()
             set showtabline-=0
         elseif WINDOWS()
             set go=
-            exec 'cd ' . fnameescape('D:\Dropbox')
-            "set autochdir
-            color Tomorrow-Night
-            set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
-            "set guifontwide=YouYuan:h10:cGB2312
+            exec 'cd ' . fnameescape('D:\Dropbox\code')
+            color hybrid
+            set guifont=Monaco:h9,Courier_New:h10
+            "set guifont=Source\ Code\ Pro:h10,Courier_New:h10
             let g:MyVimLib   = 'gvimfullscreen.dll'
             let g:VimAlpha   = 245
             let g:VimTopMost = 0
@@ -240,9 +231,6 @@ call plug#end()
     "set matchpairs+=<:>                " Match, to be used with %
     set pastetoggle=<F12>               " pastetoggle
 
-    " sop is c
-    autocmd BufNewFile,BufRead *.sop    set filetype=c
-    autocmd BufNewFile,BufRead *.sop let g:airline#extensions#whitespace#checks = []
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd FileType haskell,puppet,ruby,yml
@@ -253,22 +241,27 @@ call plug#end()
     autocmd FileType haskell setlocal commentstring=--\ %s
     " Workaround broken colour highlighting in Haskell
     autocmd FileType haskell,rust setlocal nospell
+    autocmd BufNewFile,BufRead *.py  set nu
+
+    " Sop file
+    autocmd BufNewFile,BufRead *.sop set filetype=c
+    autocmd BufNewFile,BufRead *.sop let g:airline#extensions#whitespace#checks = []
 "}
 
 " Key (re)Mappings {
     let mapleader   = " "
     let g:mapleader = " "
 
-    nm <silent> <leader>n :ene<CR>
-    nm <leader>c      :bd<cr>
-    nm <leader>q      :bd!<cr>
-    nm <leader>xx     :qa!<cr>
-    nm <leader>t      :set ft=
+    nm <leader>n  :ene<CR>
+    nm <leader>o  :TagbarToggle<CR>
+    nm <leader>c  :bd!<cr>
+    nm <leader>q  :bd<cr>
+    nm <leader>xx :qa!<cr>
+    nm <leader>t  :set ft=
 
     " remap vim 0
     nm 0 ^
     nm j gj
-
     nm k gk
     nm Y y$
 
@@ -284,17 +277,19 @@ call plug#end()
         nm <a-e>  :call SetAlpha(10)<cr>
     endif
 
+    nm <leader>r :call leaderf#Mru#startExpl(g:Lf_WindowPosition)<cr>
+
     " Code folding options
-    nm <leader>f0 :set foldlevel=0<CR>
-    nm <leader>f1 :set foldlevel=1<CR>
-    nm <leader>f2 :set foldlevel=2<CR>
-    nm <leader>f3 :set foldlevel=3<CR>
-    nm <leader>f4 :set foldlevel=4<CR>
-    nm <leader>f5 :set foldlevel=5<CR>
-    nm <leader>f6 :set foldlevel=6<CR>
-    nm <leader>f7 :set foldlevel=7<CR>
-    nm <leader>f8 :set foldlevel=8<CR>
-    nm <leader>f9 :set foldlevel=9<CR>
+    "nm <leader>f0 :set foldlevel=0<CR>
+    "nm <leader>f1 :set foldlevel=1<CR>
+    "nm <leader>f2 :set foldlevel=2<CR>
+    "nm <leader>f3 :set foldlevel=3<CR>
+    "nm <leader>f4 :set foldlevel=4<CR>
+    "nm <leader>f5 :set foldlevel=5<CR>
+    "nm <leader>f6 :set foldlevel=6<CR>
+    "nm <leader>f7 :set foldlevel=7<CR>
+    "nm <leader>f8 :set foldlevel=8<CR>
+    "nm <leader>f9 :set foldlevel=9<CR>
 
     nm <silent> <leader>/ :nohlsearch<CR>
 
@@ -305,7 +300,6 @@ call plug#end()
     " quick open vimrc in a new tab
     nm <leader>v  :e $MYVIMRC<cr>
     nm <leader>s  :source $MYVIMRC<cr>
-    nm <leader>r  :e ~/.vim/README.md<cr>
 
     " mouse
     nm <leader>sv :set mouse=v<cr>
@@ -333,6 +327,9 @@ call plug#end()
     " Change Working Directory to that of the current file
     cm cwd lcd %:p:h
     cm cd. lcd %:p:h
+
+    cm <C-A> <Home>
+    cm <C-E> <End>
 
     " For when you forget to sudo.. Really Write the file.
     cm w!! w !sudo tee % >/dev/null
@@ -383,11 +380,18 @@ call plug#end()
         nmap <Leader>ac <Plug>ToggleAutoCloseMappings
     "}
 
+    " LeaderF {
+        let g:Lf_WildIgnore = {
+                    \ 'dir': ['.svn','.git','.hg'],
+                    \ 'file': ['*.jpg']
+                    \}
+    " }
+
     " NerdTree {
         if isdirectory(expand("~/.vim/Plugged/nerdtree"))
             let g:NERDShutUp=1
-            map <leader>e :NERDTreeFind<CR>
-            nmap <leader>nt :NERDTreeToggle<CR>
+            "map <leader>e :NERDTreeFind<CR>
+            nm  <leader>e :NERDTreeToggle<CR>
 
             let NERDTreeShowBookmarks=1
             let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$',
@@ -403,31 +407,31 @@ call plug#end()
 
     " Tabularize {
         if isdirectory(expand("~/.vim/Plugged/tabular"))
-            nmap <Leader>a&     : Tabularize /&<CR>
-            vmap <Leader>a&     : Tabularize /&<CR>
-            nmap <Leader>a=     : Tabularize /^[^=]*\zs=<CR>
-            vmap <Leader>a=     : Tabularize /^[^=]*\zs=<CR>
-            nmap <Leader>a=>    : Tabularize /=><CR>
-            vmap <Leader>a=>    : Tabularize /=><CR>
-            nmap <Leader>a:     : Tabularize / : <CR>
-            vmap <Leader>a:     : Tabularize / : <CR>
-            nmap <Leader>a::    : Tabularize / : \zs<CR>
-            vmap <Leader>a::    : Tabularize / : \zs<CR>
-            nmap <Leader>a,     : Tabularize /,<CR>
-            vmap <Leader>a,     : Tabularize /,<CR>
-            nmap <Leader>a,,    : Tabularize /,\zs<CR>
-            vmap <Leader>a,,    : Tabularize /,\zs<CR>
-            nmap <Leader>a<Bar> : Tabularize /<Bar><CR>
-            vmap <Leader>a<Bar> : Tabularize /<Bar><CR>
+            nm <Leader>a&     : Tabularize /&<CR>
+            vm <Leader>a&     : Tabularize /&<CR>
+            nm <Leader>a=     : Tabularize /^[^=]*\zs=<CR>
+            vm <Leader>a=     : Tabularize /^[^=]*\zs=<CR>
+            nm <Leader>a=>    : Tabularize /=><CR>
+            vm <Leader>a=>    : Tabularize /=><CR>
+            nm <Leader>a:     : Tabularize / : <CR>
+            vm <Leader>a:     : Tabularize / : <CR>
+            nm <Leader>a::    : Tabularize / : \zs<CR>
+            vm <Leader>a::    : Tabularize / : \zs<CR>
+            nm <Leader>a,     : Tabularize /,<CR>
+            vm <Leader>a,     : Tabularize /,<CR>
+            nm <Leader>a,,    : Tabularize /,\zs<CR>
+            vm <Leader>a,,    : Tabularize /,\zs<CR>
+            nm <Leader>a<Bar> : Tabularize /<Bar><CR>
+            vm <Leader>a<Bar> : Tabularize /<Bar><CR>
         endif
     "}
 
     " Session List {
         set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
         if isdirectory(expand("~/.vim/Plugged/sessionman.vim/"))
-            nmap <leader>sl :SessionList<CR>
-            nmap <leader>ss :SessionSave<CR>
-            nmap <leader>sc :SessionClose<CR>
+            nm <leader>sl :SessionList<CR>
+            nm <leader>ss :SessionSave<CR>
+            nm <leader>sc :SessionClose<CR>
         endif
     "}
 
@@ -437,11 +441,12 @@ call plug#end()
             map <leader>a :VimwikiToggleListItem<CR>
             " diary map
             autocmd BufNewFile,BufRead *.wiki map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
-                            \ 5o<ESC>ggJj^i<tab>
+                            \ 3o<ESC>ggj^i<tab>
             if WINDOWS()
                 let g:vimwiki_list = [{'path': 'D:\Dropbox\doc\vimwiki',
                             \"syntax": "markdown"}]
-                map <leader>wl :e D:\Dropbox\doc\vimwiki\WorkLog.wiki<CR>
+                cm cds cd  D:\project\source-code\<CR>
+                cm dpb cd  D:\Dropbox\<CR>
             elseif OSX()
                 let g:vimwiki_list = [{'path': '~/Dropbox/doc/vimwiki',
                             \"syntax": "markdown"}]
@@ -449,53 +454,8 @@ call plug#end()
         endif
     "}
 
-    " ctrlp {
-        if isdirectory(expand("~/.vim/Plugged/ctrlp.vim/"))
-            let g:ctrlp_working_path_mode = 'ra'
-            let g:ctrlp_cmd = 'CtrlPMRU'
-            nnoremap <silent> <D-t> :CtrlP<CR>
-            nnoremap <silent> <D-r> :CtrlPMRU<CR>
-            let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
-
-            if executable('ag')
-                let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
-            elseif executable('ack-grep')
-                let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
-            elseif executable('ack')
-                let s:ctrlp_fallback = 'ack %s --nocolor -f'
-            " On Windows use "dir" as fallback command.
-            elseif WINDOWS()
-                let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
-            else
-                let s:ctrlp_fallback = 'find %s -type f'
-            endif
-            if exists("g:ctrlp_user_command")
-                unlet g:ctrlp_user_command
-            endif
-            let g:ctrlp_user_command = {
-                \ 'types': {
-                    \ 1: ['.git', 'cd %s && git ls-files .
-                    \    --cached --exclude-standard --others'],
-                    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-                \ },
-                \ 'fallback': s:ctrlp_fallback
-            \ }
-
-            if isdirectory(expand("~/.vim/Plugged/ctrlp-funky/"))
-                " CtrlP extensions
-                let g:ctrlp_extensions = ['funky']
-
-                "funky
-                nnoremap <Leader>fu :CtrlPFunky<Cr>
-            endif
-        endif
-    "}
-
     " TagBar {
         if isdirectory(expand("~/.vim/Plugged/tagbar/"))
-            nnoremap <silent> <leader>tt :TagbarToggle<CR>
         endif
     "}
 
@@ -525,6 +485,13 @@ call plug#end()
         endif
     "}
 
+    " markdow {
+    let g:vim_markdown_folding_disabled = 1
+    nm <leader>wl :e D:\Dropbox\code\log.md<CR>
+    autocmd BufNewFile,BufRead *.md map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
+                \ 5o<ESC>ggj^i<tab>
+
+    " }
     " Fugitive {
         if isdirectory(expand("~/.vim/Plugged/vim-fugitive/"))
             nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -571,16 +538,6 @@ call plug#end()
             if !exists('g:airline_powerline_fonts')
                 " Use the default set of separators with a few customizations
             endif
-        endif
-    "}
-
-    " fugitive  {
-        if isdirectory(expand("~/.vim/Plugged/vim-fugitive/"))
-            nnoremap <silent> <leader>gs :Gstatus<CR>
-            nnoremap <silent> <leader>gd :Gdiff<CR>
-            nnoremap <silent> <leader>gc :Gcommit<CR>
-            nnoremap <silent> <leader>gl :Glog<CR>
-            nnoremap <silent> <leader>gp :Git push<CR>
         endif
     "}
 
@@ -634,32 +591,32 @@ call plug#end()
     "}
 
     " highlight active windows {
-    if exists('+colorcolumn')
-        function! s:DimInactiveWindows()
-            for i in range(1, tabpagewinnr(tabpagenr(), '$'))
-                let l:range = ""
-                if i != winnr()
-                    if &wrap
-                        " HACK: when wrapping lines is enabled, we use the
-                        " maximum number " of columns getting highlighted.
-                        " This might get calculated by " looking for the longest
-                        " visible line and using a multiple of winwidth().
-                        let l:width=256
-                    else
-                        let l:width=winwidth(i)
-                    endif
-                    let l:range = join(range(1, l:width), ',')
-                endif
-                call setwinvar(i, '&colorcolumn', l:range)
-            endfor
-        endfunction
-        augroup DimInactiveWindows
-            au!
-            au WinEnter * call s:DimInactiveWindows()
-            au WinEnter * set cursorline
-            au WinLeave * set nocursorline
-        augroup END
-    endif
+    "if exists('+colorcolumn')
+        "function! s:DimInactiveWindows()
+            "for i in range(1, tabpagewinnr(tabpagenr(), '$'))
+                "let l:range = ""
+                "if i != winnr()
+                    "if &wrap
+                        "" HACK: when wrapping lines is enabled, we use the
+                        "" maximum number " of columns getting highlighted.
+                        "" This might get calculated by " looking for the longest
+                        "" visible line and using a multiple of winwidth().
+                        "let l:width=256
+                    "else
+                        "let l:width=winwidth(i)
+                    "endif
+                    "let l:range = join(range(1, l:width), ',')
+                "endif
+                "call setwinvar(i, '&colorcolumn', l:range)
+            "endfor
+        "endfunction
+        "augroup DimInactiveWindows
+            "au!
+            "au WinEnter * call s:DimInactiveWindows()
+            "au WinEnter * set cursorline
+            "au WinLeave * set nocursorline
+        "augroup END
+    "endif
     "}
 
     " Cycle through relativenumber + number, number (only), and no numbering.
@@ -778,18 +735,19 @@ call plug#end()
        elseif has("gui_win32")
            set guifont=InputMono:h14,Menlo:h10,Consolas:h10,Courier_New:h10
        elseif has("gui_gtk")
-           set guifont=Monospace\ 22        " for ubuntu
+           set guifont=Monospace\ 22        " for linux
        end
    endfunction
 
    function! PresentationModeOff()
-       colorscheme Tomorrow-Night
+       set bg=dark
+       colorscheme hybrid
        if has('gui_macvim')
            set guifont=Monaco:h17           " for Mac
        elseif has("gui_win32")
            set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
        elseif has("gui_gtk")
-           set guifont=Monospace\ 14        " for ubuntu
+           set guifont=Monospace\ 14        " for linux
        end
    endfunction
 
