@@ -9,12 +9,18 @@ Plug 'Raimondi/delimitMate'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
+"Plug 'Raimondi/delimitMate'
+"Plug 'Shougo/denite.nvim'
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'airblade/vim-gitgutter',{'frozen':1}
 Plug 'tpope/vim-fugitive'
-Plug 'easymotion/vim-easymotion'
+"Plug 'easymotion/vim-easymotion'
 Plug 'ervandew/supertab'
 Plug 'gaving/vim-sqlcase'
 Plug 'godlygeek/tabular'
 Plug 'itchyny/calendar.vim'
+Plug '~/.fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -28,18 +34,24 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'sjl/gundo.vim'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-ragtag'
+"Plug 'terryma/vim-multiple-cursors'
+"Plug 'danro/rename.vim'
+"Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-surround'
+"Plug 'itchyny/lightline.vim'
+"Plug 'cocopon/lightline-hybrid.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/SearchComplete'
 Plug 'vim-scripts/matchit.zip'
-Plug 'vimwiki/vimwiki'
+"Plug 'vimwiki/vimwiki'
 Plug 'yianwillis/vimcdoc'
 Plug '~/autocmds'
 " Colorsheme {
-Plug 'gerardbm/vim-atomic'
+Plug 'hzchirs/vim-material'
+Plug 'colepeters/spacemacs-theme.vim'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'ashfinal/vim-colors-violet'
 Plug 'altercation/vim-colors-solarized'
 Plug 'thenewvu/vim-colors-sketching'
 Plug 'antlypls/vim-colors-codeschool'
@@ -138,11 +150,13 @@ call plug#end()
 
 " Vim UI {
     set t_Co=256                        " Enable 256 colors
+    color onedark                       " Load a colorscheme
     set background=dark                 " Assume a dark background
     colors Tomorrow-Night               " Load a colorscheme
 
     set showmode                        " Display the current mode
     set cursorline                      " Highlight current line
+    "set cursorcolumn
     set tabpagemax=15                   " Only show 15 tabs
 
     highlight clear SignColumn          " SignColumn should match background
@@ -156,6 +170,7 @@ call plug#end()
 
     set backspace=indent,eol,start      " Backspace for dummies
     set linespace=0                     " No extra spaces between rows
+    set number
     set numberwidth=4
     set showmatch                       " Show matching brackets/parenthesis
     set incsearch                       " Find as you type search
@@ -182,6 +197,7 @@ call plug#end()
         set lines=40                    " 40 lines of text instead of 24
         if LINUX()
             set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11
+            color hybrid
         elseif OSX()
             set guifont=Monaco:h14,Menlo\ Regular:h11,Consolas\ Regular:h12
             colors Tomorrow-Night
@@ -191,8 +207,9 @@ call plug#end()
             set go=
             exec 'cd ' . fnameescape('D:\Dropbox\code')
             color hybrid
-            set guifont=Monaco:h9,Courier_New:h10
-            "set guifont=Source\ Code\ Pro:h10,Courier_New:h10
+            "set guifont=Monaco:h10,Courier_New:h9
+            "set guifont=aix:h10,Xhei\ Mono:h10
+            set guifont=Source\ Code\ Pro:h10,Courier_New:h10
             let g:MyVimLib   = 'gvimfullscreen.dll'
             let g:VimAlpha   = 245
             let g:VimTopMost = 0
@@ -283,6 +300,7 @@ call plug#end()
         nm <a-f>  :call SwitchVimTopMostMode()<cr>
         nm <a-r>  :call SetAlpha(-10)<cr>
         nm <a-e>  :call SetAlpha(10)<cr>
+        nm <a-w>  :call SetAlpha(100)<cr>
     endif
 
     nm <leader>r :call leaderf#Mru#startExpl(g:Lf_WindowPosition)<cr>
@@ -501,6 +519,7 @@ call plug#end()
     if OSX()
         nm <leader>wl :e ~/Dropbox/doc/log.md<CR>
     endif
+    nm <leader>wl :e D:\Dropbox\doc\log.md<CR>
     autocmd BufNewFile,BufRead *.md map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
                 \ 5o<ESC>ggj^i<tab>
 
@@ -521,6 +540,12 @@ call plug#end()
     " FZF{
         if isdirectory(expand("~/.vim/Plugged/fzf.vim/"))
             nnoremap <silent> <c-p> :FZF<CR>
+        endif
+    "}
+
+    " FZF{
+        if isdirectory(expand("~/.vim/Plugged/fzf.vim/"))
+            nnoremap <silent> <leader>f :FZF<CR>
         endif
     "}
 
@@ -559,6 +584,14 @@ call plug#end()
         endif
     "}
 
+    " lightline {
+    if isdirectory(expand("~/.vim/Plugged/lightline.vim/"))
+        set laststatus=2
+        set noshowmode
+        let g:lightline = {}
+        let g:lightline.colorscheme = 'hybrid'
+    endif
+    " }
     " ultisnips {
         if isdirectory(expand("~/.vim/Plugged/ultisnips/"))
             " Trigger configuration.
@@ -598,6 +631,7 @@ call plug#end()
 
     "quick format multi line data for sql {
     function! FormatSqlData()
+        set nonu
         silent! set ft=sql
         silent! %s/^\(.*\)$/'\1',/
         silent! 1 s/^/(/
