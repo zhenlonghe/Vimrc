@@ -8,7 +8,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Yggdroot/LeaderF'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'easymotion/vim-easymotion'
@@ -17,6 +16,8 @@ Plug 'gaving/vim-sqlcase'
 Plug 'godlygeek/tabular'
 Plug 'itchyny/calendar.vim'
 Plug 'junegunn/limelight.vim'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'kana/vim-repeat'
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
@@ -78,7 +79,7 @@ call plug#end()
 " General {
     syntax on                           " Syntax highlighting
     filetype plugin indent on           " Automatically detect file types.
-    set mouse=a                         " Automatically enable mouse usage
+    set mouse=v                         " Automatically enable mouse usage
     set mousehide                       " Hide the mouse cursor while typing
     set noimdisable
     set encoding=utf-8
@@ -137,8 +138,8 @@ call plug#end()
 
 " Vim UI {
     set t_Co=256                        " Enable 256 colors
-    color hybrid                        " Load a colorscheme
     set background=dark                 " Assume a dark background
+    colors Tomorrow-Night               " Load a colorscheme
 
     set showmode                        " Display the current mode
     set cursorline                      " Highlight current line
@@ -168,7 +169,7 @@ call plug#end()
     set whichwrap=b,s,h,l,<,>,[,]       " Backspace and cursor keys wrap too
     set scrolljump=5                    " Lines to scroll when cursor leaves
     set scrolloff=3                     " Lines to keep above and below cursor
-    set foldenable                      " Auto fold code
+    set nofoldenable                      " Auto fold code
 
     " Highlight problematic whitespace
     set list
@@ -246,6 +247,13 @@ call plug#end()
     " Sop file
     autocmd BufNewFile,BufRead *.sop set filetype=c
     autocmd BufNewFile,BufRead *.sop let g:airline#extensions#whitespace#checks = []
+
+    "wxml,wxss
+    "set equalprg=xmllint\ --format\ -
+    autocmd BufNewFile,BufRead *.wxml set filetype=xml
+    autocmd BufNewFile,BufRead *.wxss set filetype=css
+
+
 "}
 
 " Key (re)Mappings {
@@ -487,7 +495,12 @@ call plug#end()
 
     " markdow {
     let g:vim_markdown_folding_disabled = 1
-    nm <leader>wl :e D:\Dropbox\code\log.md<CR>
+    if WINDOWS()
+        nm <leader>wl :e D:\Dropbox\code\log.md<CR>
+    endif
+    if OSX()
+        nm <leader>wl :e ~/Dropbox/doc/log.md<CR>
+    endif
     autocmd BufNewFile,BufRead *.md map <leader>m <ESC>ggO## <C-R>=strftime("%Y %m %d %A")<CR><ESC>
                 \ 5o<ESC>ggj^i<tab>
 
@@ -503,6 +516,11 @@ call plug#end()
             nnoremap <silent> <leader>ge :Gedit<CR>
             nnoremap <silent> <leader>gi :Git add -p %<CR>
             nnoremap <silent> <leader>gg :SignifyToggle<CR>
+        endif
+    "}
+    " FZF{
+        if isdirectory(expand("~/.vim/Plugged/fzf.vim/"))
+            nnoremap <silent> <c-p> :FZF<CR>
         endif
     "}
 
