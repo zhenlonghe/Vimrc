@@ -70,13 +70,13 @@ call plug#end()
     " Backups {
         "set autochdir
         set backup
-        set backupdir=~/.cache/backup
-        set directory=~/.cache/backup
+        set backupdir=~/.vim/backup
+        set directory=~/.vim/backup
         set writebackup
-        let g:netrw_home='~/.cache/'
+        let g:netrw_home='~/.vim/'
         if has('persistent_undo')
             set undofile                " So is persistent undo ...
-            set undodir=~/.cache/undo/
+            set undodir=~/.vim/undo/
             set undolevels=1000         " Max number of changes can be undone
             set undoreload=10000        " Max number lines to save for undo
         endif
