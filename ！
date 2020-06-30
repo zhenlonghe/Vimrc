@@ -170,6 +170,7 @@ call plug#end()
 
     " Sop file
     autocmd BufNewFile,BufRead *.sop set filetype=c
+
     "wxml,wxss
     autocmd BufNewFile,BufRead *.wxml set filetype=xml
     autocmd BufNewFile,BufRead *.wxss set filetype=css
@@ -180,15 +181,10 @@ call plug#end()
     let g:mapleader = " "
 
     nm 0 ^
-    nm B ^
-    nm E $
     nm j gj
     nm k gk
     nm Y y$
-    im jk <esc>
 
-    " highlight last inserted text
-    nnoremap gV `[v`]
     " c-j,k for buffer switch
     nm <c-j> :bn<cr>
     nm <c-k> :bp<cr>
