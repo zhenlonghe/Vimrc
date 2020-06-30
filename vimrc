@@ -174,7 +174,7 @@ call plug#end()
     "wxml,wxss
     autocmd BufNewFile,BufRead *.wxml set filetype=xml
     autocmd BufNewFile,BufRead *.wxss set filetype=css
-"}
+" }
 
 " Key (re)Mappings {
     let mapleader   = " "
@@ -257,9 +257,10 @@ call plug#end()
         command! -bang -nargs=* -complete=file Wq wq<bang> <args>
         command! -bang -nargs=* -complete=file WQ wq<bang> <args>
     endif
-"}
+" }
 
 " Plugins {
+
     " LeaderF {
         let g:Lf_WildIgnore = {
                     \ 'dir': ['.svn','.git','.hg'],
@@ -307,7 +308,7 @@ call plug#end()
         endif
     "}
 
-    " FZF{
+    " FZF {
         if isdirectory(expand("~/.vim/Plugged/fzf.vim/"))
             nnoremap <silent> <leader>f :FZF<CR>
             nnoremap <silent> <c-p> :FZF<CR>
@@ -322,7 +323,7 @@ call plug#end()
         let g:lightline.colorscheme = 'gruvbox'
     endif
     " }
-"}
+" }
 
 " Functions {
 
