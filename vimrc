@@ -19,15 +19,8 @@ Plug 'airblade/vim-gitgutter',{'frozen':1}
 Plug 'tpope/vim-fugitive'
 Plug 'ervandew/supertab'
 Plug 'Raimondi/delimitMate'
-Plug 'yianwillis/vimcdoc'
-
-" Colorsheme 
 Plug 'morhetz/gruvbox'
-Plug 'joshdick/onedark.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'chriskempson/vim-tomorrow-theme'
 call plug#end()
-
 
 " General {
     set nocompatible
@@ -35,7 +28,7 @@ call plug#end()
     filetype plugin indent on           " Automatically detect file types.
     set mouse=v                         " Automatically enable mouse usage
     set mousehide                       " Hide the mouse cursor while typing
-    set noimdisable
+    set noimdisable                     " Disable IME
     set encoding=utf-8
     scriptencoding utf-8
     set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,gbk,euc-kr,utf-bom
@@ -68,19 +61,16 @@ call plug#end()
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG
                 \ call setpos('.', [0, 1, 1, 0])
 
-    " Backups {
-        "set autochdir
-        "set backup
-        "set backupdir=~/.vim/backup
-        "set directory=~/.vim/backup
-        "set writebackup
-        "let g:netrw_home='~/.vim/'
-        "if has('persistent_undo')
-            "set undofile                " So is persistent undo ...
-            "set undodir=~/.vim/undo/
-            "set undolevels=1000         " Max number of changes can be undone
-            "set undoreload=10000        " Max number lines to save for undo
-        "endif
+    " Identify platform {
+    silent function! OSX()
+    return has('macunix')
+            endfunction
+            silent function! LINUX()
+            return has('unix') && !has('macunix') && !has('win32unix')
+        endfunction
+        silent function! WINDOWS()
+        return  (has('win32') || has('win64'))
+    endfunction
     "}
 "}
 
@@ -134,8 +124,7 @@ call plug#end()
             color gruvbox
         elseif OSX()
             set guifont=Monaco:h13,Menlo\ Regular:h11,Consolas\ Regular:h12
-            "set background=light
-            colors gruvbox
+            colors solarized
             set guioptions=aAce
             set showtabline-=0
         endif
@@ -143,10 +132,6 @@ call plug#end()
         if &term == 'xterm' || &term == 'screen'
             set t_Co=256                " Enable 256 colors
         endif
-    endif
-    if !exists(":DiffOrig")
-        command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-              \ | wincmd p | diffthis
     endif
 "}
 
@@ -161,7 +146,7 @@ call plug#end()
     set nojoinspaces                    " Prevents inserting two spaces
     set splitright                      " Puts new vsplit windows to the right
     set splitbelow                      " Puts new split windows to the bottom
-    "set matchpairs+=<:>                " Match, to be used with %
+    set matchpairs+=<:>                 " Match, to be used with %
     set pastetoggle=<F12>               " pastetoggle
 
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
@@ -169,11 +154,6 @@ call plug#end()
     autocmd FileType haskell,puppet,ruby,yml
                 \ setlocal expandtab shiftwidth=2 softtabstop=2
 
-    " Sop file
-    autocmd BufNewFile,BufRead *.sop set filetype=c
-    "wxml,wxss
-    autocmd BufNewFile,BufRead *.wxml set filetype=xml
-    autocmd BufNewFile,BufRead *.wxss set filetype=css
 " }
 
 " Key (re)Mappings {
@@ -325,18 +305,6 @@ call plug#end()
 
 " Functions {
 
-    " Identify platform {
-    silent function! OSX()
-    return has('macunix')
-            endfunction
-            silent function! LINUX()
-            return has('unix') && !has('macunix') && !has('win32unix')
-        endfunction
-        silent function! WINDOWS()
-        return  (has('win32') || has('win64'))
-    endfunction
-    "}
-
     " Clean whitespace {
     function! DelTrailingWhitespace()
         " Preparation: save last search, and cursor position.
@@ -390,69 +358,4 @@ call plug#end()
     endfunction
     command! -bang -nargs=* CycleNumbering :call CycleNumbering(<bang> <args>)
     noremap <leader>tn :call CycleNumbering()<CR>
-
-    " Allow to trigger background
-    function! ToggleBG()
-        let s:tbg = &background
-        " Inversion
-        if s:tbg == "dark"
-            set background=light
-        else
-            set background=dark
-        endif
-    endfunction
-    noremap <leader>bg :call ToggleBG()<CR>
-
-    function! ScreenFilename()
-      if has('amiga')
-        return "s:.vimsize"
-      elseif has('win32')
-        return $HOME.'\.cache\_vimsize'
-      else
-        return $HOME.'/.vimsize'
-      endif
-    endfunction
-
-
-   " toggle between working mode and presentation mode
-   " borrowed from skalnik(https://github.com/skalnik)
-   " font size change only work for GUI-version Vim
-
-   function! PresentationModeOn()
-       colorscheme Tomorrow
-       if has("gui_macvim")
-           set guifont=Monaco:h25           " for Mac
-       elseif has("gui_win32")
-           set guifont=InputMono:h14,Menlo:h10,Consolas:h10,Courier_New:h10
-       elseif has("gui_gtk")
-           set guifont=Monospace\ 22        " for linux
-       end
-   endfunction
-
-   function! PresentationModeOff()
-       set bg=dark
-       colorscheme gruvbox
-       if has('gui_macvim')
-           set guifont=Monaco:h17           " for Mac
-       elseif has("gui_win32")
-           set guifont=InputMono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
-       elseif has("gui_gtk")
-           set guifont=Monospace\ 14        " for linux
-       end
-   endfunction
-
-   function! TogglePresentationMode()
-       if !exists('w:present')
-           let w:present=0
-       endif
-
-       if w:present==0
-           call PresentationModeOn()
-           let w:present=1
-       else
-           call PresentationModeOff()
-           let w:present=0
-       endif
-   endfunction
-   map <leader>z :call TogglePresentationMode()<CR>
 "}
