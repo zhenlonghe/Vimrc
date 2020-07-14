@@ -334,7 +334,7 @@ call plug#end()
         set nonu
         silent! set ft=sql
         silent! %s/^\(.*\)$/'\1',/
-        silent! 1 s/^/= (/
+        silent! 1 s/^/in (/
         silent! $ s/,$/);/
         silent! noh
         silent! 1,$ y
