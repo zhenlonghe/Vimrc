@@ -63,12 +63,12 @@ call plug#end()
 
     " Identify platform {
     silent function! OSX()
-    return has('macunix')
-            endfunction
-            silent function! LINUX()
-            return has('unix') && !has('macunix') && !has('win32unix')
-        endfunction
-        silent function! WINDOWS()
+        return has('macunix')
+    endfunction
+    silent function! LINUX()
+        return has('unix') && !has('macunix') && !has('win32unix')
+    endfunction
+    silent function! WINDOWS()
         return  (has('win32') || has('win64'))
     endfunction
     "}
@@ -123,9 +123,9 @@ call plug#end()
             set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11
             color gruvbox
         elseif OSX()
+            set guioptions=
             set guifont=Monaco:h13,Menlo\ Regular:h11,Consolas\ Regular:h12
             colors solarized
-            set guioptions=aAce
             set showtabline-=0
         endif
     else
