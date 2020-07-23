@@ -139,7 +139,7 @@ call plug#end()
     set nowrap                          " Do not wrap long lines
     set autoindent                      " Indent at the same level
     set shiftwidth=4                    " Use indents of 4 spaces
-    set expandtab                       " Tabs are spaces, not tabs
+    "set expandtab                       " Tabs are spaces, not tabs
     set tabstop=4                       " An indentation every four columns
     set softtabstop=4                   " Let backspace delete indent
     set smarttab                        " Insert tabs on the start
