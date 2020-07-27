@@ -5,20 +5,19 @@
 "    ===================================
 
 call plug#begin('~/.vim/plugged')
-Plug '~/autocmds'
 Plug '~/.fzf'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdcommenter'
+Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
-Plug 'luochen1990/rainbow'
-Plug 'vim-scripts/SearchComplete'
 Plug 'airblade/vim-gitgutter',{'frozen':1}
 Plug 'tpope/vim-fugitive'
 Plug 'ervandew/supertab'
-Plug 'Raimondi/delimitMate'
+Plug 'vim-scripts/SearchComplete'
+Plug 'luochen1990/rainbow'
 Plug 'morhetz/gruvbox'
 call plug#end()
 
