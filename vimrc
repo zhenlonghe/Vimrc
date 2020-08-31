@@ -116,6 +116,7 @@ call plug#end()
 
 " GUI Settings {
     if has('gui_running')
+		language en_US
         set guioptions-=T               " Remove the toolbar
         set lines=40                    " 40 lines of text instead of 24
         if LINUX()
@@ -124,7 +125,7 @@ call plug#end()
         elseif OSX()
             set guioptions=
             set guifont=Monaco:h13,Menlo\ Regular:h11,Consolas\ Regular:h12
-            colors solarized
+            colors gruvbox
             set showtabline-=0
         endif
     else
