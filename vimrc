@@ -166,16 +166,18 @@ call plug#end()
     nm j gj
     nm k gk
     nm Y y$
-    im jk <esc>
+    im jk <ESC>
+    im jj <ESC>
 
     " highlight last inserted text
     nnoremap gV `[v`]
+	" select all text
+    nnoremap gA ggVG
     " c-j,k for buffer switch
     nm <c-j> :bn<cr>
     nm <c-k> :bp<cr>
     nm <tab> <c-w>w
     " emacs key bind
-    im jj    <ESC>
     im <c-a> <HOME>
     im <c-e> <END>
     im <C-f> <Right>
