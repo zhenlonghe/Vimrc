@@ -151,6 +151,7 @@ call plug#end()
 
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+    autocmd BufNewFile,BufRead *.conf set filetype=dosini
     autocmd FileType haskell,puppet,ruby,yml
                 \ setlocal expandtab shiftwidth=2 softtabstop=2
 
