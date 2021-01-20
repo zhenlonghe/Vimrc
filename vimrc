@@ -291,8 +291,9 @@ call plug#end()
 
     " FZF {
         if isdirectory(expand("~/.vim/Plugged/fzf.vim/"))
-            nnoremap <silent> <leader>f :FZF<CR>
             nnoremap <silent> <c-p> :FZF<CR>
+            nnoremap <silent> <leader>f :FZF<CR>
+			nnoremap <silent> <leader>m :History<CR>
         endif
     "}
 
