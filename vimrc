@@ -249,7 +249,7 @@ call plug#end()
 " Plugins {
 
     " Rainbow {
-        if isdirectory(expand("~/.vim/Plugged/rainbow/"))
+        if isdirectory(expand("~/.vim/plugged/rainbow/"))
             let g:rainbow_active = 1
             let g:rbpt_max = 16
             let g:rbpt_loadcmd_toggle = 0
@@ -275,7 +275,7 @@ call plug#end()
     "}
 
     " Fugitive {
-        if isdirectory(expand("~/.vim/Plugged/vim-fugitive/"))
+        if isdirectory(expand("~/.vim/plugged/vim-fugitive/"))
             nnoremap <silent> <leader>gs :Gstatus<CR>
             nnoremap <silent> <leader>gd :Gdiff<CR>
             nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -289,7 +289,7 @@ call plug#end()
     "}
 
     " FZF {
-        if isdirectory(expand("~/.vim/Plugged/fzf.vim/"))
+        if isdirectory(expand("~/.vim/plugged/fzf.vim/"))
             nnoremap <silent> <c-p> :FZF<CR>
             nnoremap <silent> <leader>f :FZF<CR>
 			nnoremap <silent> <leader>m :History<CR>
@@ -297,7 +297,7 @@ call plug#end()
     "}
 
     " lightline {
-    if isdirectory(expand("~/.vim/Plugged/lightline.vim/"))
+    if isdirectory(expand("~/.vim/plugged/lightline.vim/"))
         set laststatus=2
         set noshowmode
         let g:lightline = {}
