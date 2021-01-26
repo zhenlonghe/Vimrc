@@ -11,11 +11,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-surround'
-Plug 'itchyny/lightline.vim'
-Plug 'airblade/vim-gitgutter',{'frozen':1}
-Plug 'tpope/vim-fugitive'
 Plug 'ervandew/supertab'
 Plug 'vim-scripts/SearchComplete'
+Plug 'airblade/vim-gitgutter',{'frozen':1}
+Plug 'tpope/vim-fugitive'
+Plug 'itchyny/lightline.vim'
 Plug 'luochen1990/rainbow'
 Plug 'morhetz/gruvbox'
 call plug#end()
@@ -54,19 +54,14 @@ call plug#end()
     set t_vb=
     set tm=500
 
-    " Instead of reverting the cursor to the last position in the buffer, we
-    " set it to the first line when editing a git commit message
-    au FileType gitcommit au! BufEnter COMMIT_EDITMSG
-                \ call setpos('.', [0, 1, 1, 0])
-
     " Identify platform {
-    silent function! OSX()
+    silent function! MacOS()
         return has('macunix')
     endfunction
-    silent function! LINUX()
+    silent function! Linux()
         return has('unix') && !has('macunix') && !has('win32unix')
     endfunction
-    silent function! WINDOWS()
+    silent function! Windows()
         return  (has('win32') || has('win64'))
     endfunction
     "}
@@ -108,20 +103,19 @@ call plug#end()
     set scrolloff=3                     " Lines to keep above and below cursor
     set nofoldenable                    " Auto fold code
 
-    " Highlight problematic whitespace
-    set list
+    set list                            " Highlight problematic whitespace
     set listchars=tab:\ \ ,trail:·,extends:#,nbsp:.
 "}
 
 " GUI Settings {
     if has('gui_running')
-		language en_US
+        language en_US
         set guioptions-=T               " Remove the toolbar
         set lines=40                    " 40 lines of text instead of 24
-        if LINUX()
+        if Linux()
             set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11
             color gruvbox
-        elseif OSX()
+        elseif MacOS()
             set guioptions=
             set guifont=Monaco:h13,Menlo\ Regular:h11,Consolas\ Regular:h12
             colors gruvbox
@@ -149,12 +143,16 @@ call plug#end()
     set pastetoggle=<F12>               " pastetoggle
 
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
-    autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-    autocmd BufNewFile,BufRead *.conf set filetype=dosini
-    autocmd FileType haskell,puppet,ruby,yml
+    au BufNewFile,BufRead *.html.twig set filetype=html.twig
+    au BufNewFile,BufRead *.conf set filetype=dosini
+    au FileType haskell,puppet,ruby,yml
                 \ setlocal expandtab shiftwidth=2 softtabstop=2
+    " Instead of reverting the cursor to the last position in the buffer, we
+    " set it to the first line when editing a git commit message
+    au FileType gitcommit au! BufEnter COMMIT_EDITMSG
+                \ call setpos('.', [0, 1, 1, 0])
 
-" }
+"}
 
 " Key (re)Mappings {
     let mapleader   = " "
@@ -166,13 +164,11 @@ call plug#end()
     nm j gj
     nm k gk
     nm Y y$
-    im jk <ESC>
-    im jj <ESC>
 
     " highlight last inserted text
-    nnoremap gV `[v`]
+    nm gV `[v`]
 	" select all text
-    nnoremap gA ggVG
+    nm gA ggVG
     " c-j,k for buffer switch
     nm <c-j> :bn<cr>
     nm <c-k> :bp<cr>
@@ -192,10 +188,10 @@ call plug#end()
     nm <leader>n  :ene<CR>
     nm <leader>o  :TagbarToggle<CR>
     nm <leader>c  :bd!<cr>
-    nm <leader>q  :bd<cr>
+    nm <leader>w  :bd<cr>
+    nm <leader>qq :q!<cr>
     nm <leader>xx :qa!<cr>
     nm <leader>t  :set ft=
-    nm <leader>r :call leaderf#Mru#startExpl(g:Lf_WindowPosition)<cr>
     nm <silent> <leader>/ :nohlsearch<CR>
 
     " time & date map
@@ -244,12 +240,12 @@ call plug#end()
         command! -bang -nargs=* -complete=file Wq wq<bang> <args>
         command! -bang -nargs=* -complete=file WQ wq<bang> <args>
     endif
-" }
+"}
 
 " Plugins {
 
-    " Rainbow {
-        if isdirectory(expand("~/.vim/Plugged/rainbow/"))
+    " rainbow {
+        if isdirectory(expand("~/.vim/plugged/rainbow/"))
             let g:rainbow_active = 1
             let g:rbpt_max = 16
             let g:rbpt_loadcmd_toggle = 0
@@ -274,8 +270,8 @@ call plug#end()
         endif
     "}
 
-    " Fugitive {
-        if isdirectory(expand("~/.vim/Plugged/vim-fugitive/"))
+    " fugitive {
+        if isdirectory(expand("~/.vim/plugged/vim-fugitive/"))
             nnoremap <silent> <leader>gs :Gstatus<CR>
             nnoremap <silent> <leader>gd :Gdiff<CR>
             nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -288,77 +284,78 @@ call plug#end()
         endif
     "}
 
-    " FZF {
-        if isdirectory(expand("~/.vim/Plugged/fzf.vim/"))
+    " fzf {
+        if isdirectory(expand("~/.vim/plugged/fzf.vim/"))
             nnoremap <silent> <c-p> :FZF<CR>
             nnoremap <silent> <leader>f :FZF<CR>
-			nnoremap <silent> <leader>m :History<CR>
+			nnoremap <silent> <leader>r :History<CR>
         endif
     "}
 
     " lightline {
-    if isdirectory(expand("~/.vim/Plugged/lightline.vim/"))
-        set laststatus=2
-        set noshowmode
-        let g:lightline = {}
-        let g:lightline.colorscheme = 'gruvbox'
-    endif
-    " }
-" }
+        if isdirectory(expand("~/.vim/plugged/lightline.vim/"))
+            set laststatus=2
+            set noshowmode
+            let g:lightline = {}
+            let g:lightline.colorscheme = 'gruvbox'
+        endif
+    "}
+"}
 
 " Functions {
 
     " Clean whitespace {
-    function! DelTrailingWhitespace()
-        " Preparation: save last search, and cursor position.
-        let _s=@/
-        let l = line(".")
-        let c = col(".")
-        " do the business:
-        %s/\s\+$//e
-        " clean up: restore previous search history, and cursor position
-        let @/=_s
-        call cursor(l, c)
-    endfunction
-    command! -bang -nargs=* DelTrailingWhitespace
-                \ :call DelTrailingWhitespace(<bang> <args>)
+        function! DelTrailingWhitespace()
+            " Preparation: save last search, and cursor position.
+            let _s=@/
+            let l = line(".")
+            let c = col(".")
+            " do the business:
+            %s/\s\+$//e
+            " clean up: restore previous search history, and cursor position
+            let @/=_s
+            call cursor(l, c)
+        endfunction
+        command! -bang -nargs=* DelTrailingWhitespace
+                    \ :call DelTrailingWhitespace(<bang> <args>)
     "}
 
     " Clean WhiteLines {
-    function! DelWhiteLines()
-        %g/^$/d
-    endfunction
-    command! -bang -nargs=* DelWhiteLines
-                \ :call DelWhiteLines(<bang> <args>)
+        function! DelWhiteLines()
+            %g/^$/d
+        endfunction
+        command! -bang -nargs=* DelWhiteLines
+                    \ :call DelWhiteLines(<bang> <args>)
     "}
 
-    "quick format multi line data for sql {
-    function! FormatSqlData()
-        set nonu
-        silent! set ft=sql
-        silent! %s/^\(.*\)$/'\1',/
-        silent! 1 s/^/in (/
-        silent! $ s/,$/);/
-        silent! noh
-        silent! 1,$ y
-    endfunction
-    command! -bang -nargs=* FormatSqlData :call FormatSqlData(<bang> <args>)
-    noremap <leader>sl :call FormatSqlData()<CR>
+    " Quick format multi line data for sql {
+        function! FormatSqlData()
+            set nonu
+            silent! set ft=sql
+            silent! %s/^\(.*\)$/'\1',/
+            silent! 1 s/^/in (/
+            silent! $ s/,$/);/
+            silent! noh
+            silent! 1,$ y
+        endfunction
+        command! -bang -nargs=* FormatSqlData :call FormatSqlData(<bang> <args>)
+        noremap <leader>sl :call FormatSqlData()<CR>
     "}
 
-    " Cycle through relativenumber + number, number (only), and no numbering.
-    function! CycleNumbering()
-        if exists('+relativenumber')
-            execute {
-             \ '00': 'set norelativenumber   | set number',
-             \ '01': 'set norelativenumber   | set number',
-             \ '10': 'set relativenumber     | set number',
-             \ '11': 'set norelativenumber   | set nonumber' }[&number . &relativenumber]
-        else
-            " No relative numbering, just toggle numbers on and off.
-            set number!
-        endif
-    endfunction
-    command! -bang -nargs=* CycleNumbering :call CycleNumbering(<bang> <args>)
-    noremap <leader>tn :call CycleNumbering()<CR>
+    " Cycle through relativenumber + number, number (only), and no numbering.{
+        function! CycleNumbering()
+            if exists('+relativenumber')
+                execute {
+                 \ '00': 'set norelativenumber   | set number',
+                 \ '01': 'set norelativenumber   | set number',
+                 \ '10': 'set relativenumber     | set number',
+                 \ '11': 'set norelativenumber   | set nonumber' }[&number . &relativenumber]
+            else
+                " No relative numbering, just toggle numbers on and off.
+                set number!
+            endif
+        endfunction
+        command! -bang -nargs=* CycleNumbering :call CycleNumbering(<bang> <args>)
+        noremap <leader>tn :call CycleNumbering()<CR>
+    "}
 "}
