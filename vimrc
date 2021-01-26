@@ -244,11 +244,7 @@ call plug#end()
 
 " Plugins {
 
-<<<<<<< HEAD
     " rainbow {
-=======
-    " Rainbow {
->>>>>>> f2852f6efa955f8d86bf72e5ab3dfdbe37f9b12b
         if isdirectory(expand("~/.vim/plugged/rainbow/"))
             let g:rainbow_active = 1
             let g:rbpt_max = 16
@@ -274,11 +270,7 @@ call plug#end()
         endif
     "}
 
-<<<<<<< HEAD
     " fugitive {
-=======
-    " Fugitive {
->>>>>>> f2852f6efa955f8d86bf72e5ab3dfdbe37f9b12b
         if isdirectory(expand("~/.vim/plugged/vim-fugitive/"))
             nnoremap <silent> <leader>gs :Gstatus<CR>
             nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -292,11 +284,7 @@ call plug#end()
         endif
     "}
 
-<<<<<<< HEAD
     " fzf {
-=======
-    " FZF {
->>>>>>> f2852f6efa955f8d86bf72e5ab3dfdbe37f9b12b
         if isdirectory(expand("~/.vim/plugged/fzf.vim/"))
             nnoremap <silent> <c-p> :FZF<CR>
             nnoremap <silent> <leader>f :FZF<CR>
@@ -305,7 +293,6 @@ call plug#end()
     "}
 
     " lightline {
-<<<<<<< HEAD
         if isdirectory(expand("~/.vim/plugged/lightline.vim/"))
             set laststatus=2
             set noshowmode
@@ -314,16 +301,6 @@ call plug#end()
         endif
     "}
 "}
-=======
-    if isdirectory(expand("~/.vim/plugged/lightline.vim/"))
-        set laststatus=2
-        set noshowmode
-        let g:lightline = {}
-        let g:lightline.colorscheme = 'gruvbox'
-    endif
-    " }
-" }
->>>>>>> f2852f6efa955f8d86bf72e5ab3dfdbe37f9b12b
 
 " Functions {
 
