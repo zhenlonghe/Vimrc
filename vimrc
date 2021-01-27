@@ -3,7 +3,6 @@
 "    Author       : zhenlonghe@gmail.com
 "    License      : GPL v2.0
 "    ===================================
-
 call plug#begin('~/.vim/plugged')
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
