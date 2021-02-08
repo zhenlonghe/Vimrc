@@ -17,6 +17,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'luochen1990/rainbow'
 Plug 'morhetz/gruvbox'
+Plug 'nathangrigg/vim-beancount'
 call plug#end()
 
 " General {
@@ -73,7 +74,6 @@ call plug#end()
 
     set showmode                        " Display the current mode
     set cursorline                      " Highlight current line
-    "set cursorcolumn
     set tabpagemax=15                   " Only show 15 tabs
 
     highlight clear SignColumn          " SignColumn should match background
