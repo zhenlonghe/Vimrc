@@ -108,7 +108,6 @@ call plug#end()
 
 " GUI Settings {
     if has('gui_running')
-        language en_US
         set guioptions-=T               " Remove the toolbar
         set lines=40                    " 40 lines of text instead of 24
         if Linux()
@@ -121,6 +120,7 @@ call plug#end()
             set showtabline-=0
         endif
     else
+        language en_US
         if &term == 'xterm' || &term == 'screen'
             set t_Co=256                " Enable 256 colors
         endif
