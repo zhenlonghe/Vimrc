@@ -6,14 +6,14 @@
 call plug#begin('~/.vim/plugged')
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdcommenter'
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'vim-scripts/SearchComplete'
 Plug 'airblade/vim-gitgutter',{'frozen':1}
-Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'luochen1990/rainbow'
 Plug 'morhetz/gruvbox'
@@ -70,7 +70,8 @@ call plug#end()
 " Vim UI {
     set t_Co=256                        " Enable 256 colors
     set background=dark                 " Assume a dark background
-    colors gruvbox                      " Load a colorscheme
+    try | colorscheme gruvbox | catch | endtry
+                                        " use this awesome theme if possible
 
     set showmode                        " Display the current mode
     set cursorline                      " Highlight current line
@@ -100,6 +101,8 @@ call plug#end()
     set whichwrap=b,s,h,l,<,>,[,]       " Backspace and cursor keys wrap too
     set scrolljump=5                    " Lines to scroll when cursor leaves
     set scrolloff=3                     " Lines to keep above and below cursor
+    set sidescroll=1                    " Scroll left/right one character at a time
+
     set nofoldenable                    " Auto fold code
 
     set list                            " Highlight problematic whitespace
@@ -141,21 +144,25 @@ call plug#end()
     set matchpairs+=<:>                 " Match, to be used with %
     set pastetoggle=<F12>               " pastetoggle
 
-    "autocmd FileType go autocmd BufWritePre <buffer> Fmt
-    au BufNewFile,BufRead *.html.twig set filetype=html.twig
-    au BufNewFile,BufRead *.conf set filetype=dosini
-    au FileType haskell,puppet,ruby,yml
-                \ setlocal expandtab shiftwidth=2 softtabstop=2
+    " Restore last line position when opening file
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG
                 \ call setpos('.', [0, 1, 1, 0])
 
+    " Custom extensions for file types, autocmd FileType go autocmd BufWritePre <buffer> Fmt
+    au BufNewFile,BufRead *.html.twig set filetype=html.twig
+    au BufNewFile,BufRead *.conf set filetype=dosini
+    au FileType haskell,puppet,ruby,yml
+                \ setlocal expandtab shiftwidth=2 softtabstop=2
 "}
 
 " Key (re)Mappings {
     let mapleader   = " "
     let g:mapleader = " "
+    nm  <space> <nop>
 
     nm 0 ^
     nm B ^
@@ -297,6 +304,7 @@ call plug#end()
             set noshowmode
             let g:lightline = {}
             let g:lightline.colorscheme = 'gruvbox'
+            "let g:lightline.colorscheme = 'Tomorrow_Night'
         endif
     "}
 "}
