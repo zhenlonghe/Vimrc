@@ -4,7 +4,7 @@
 "    License      : GPL v2.0
 "    ===================================
 call plug#begin('~/.vim/plugged')
-Plug '~/.fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
